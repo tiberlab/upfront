@@ -7,7 +7,6 @@ resources/languages/*.qm
 #qmake and make build files:
 .qmake.stash
 Makefile
-build/
 qrc_inishell.cpp
 *.o
 moc_*
