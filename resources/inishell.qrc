@@ -1,0 +1,126 @@
+<!--
+/*****************************************************************************/
+/*  Copyright 2019 WSL Institute for Snow and Avalanche Research  SLF-DAVOS  */
+/*****************************************************************************/
+/* This file is part of INIshell.
+INIshell is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+INIshell is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with INIshell.  If not, see <http://www.gnu.org/licenses/>.
+*/
+-->
+
+<!DOCTYPE RCC><RCC version="1.0">
+<!-- All paths are relative to this .qrc file. -->
+<!-- Regenerate the icon list with something like
+find icons/ -name "*.png" | grep "oxygen" | awk '{split($1,tmp,"/"); printf("<file alias=\"%s/%s\">%s</file>\n",tmp[3],tmp[4],$1)}'
+OR find icons/ -name "*.svg" | grep "elementary" | awk '{printf("<file>%s</file>\n",$1)}'
+-->
+<qresource>
+	<file>icons/slf.svg</file>
+	<file>icons/slf_desaturated.svg</file>
+	<file>icons/active.svg</file>
+	<file>icons/inactive.svg</file>
+
+	<file>icons/inishell_32.png</file>
+	<file>icons/inishell_192.ico</file>
+
+	<file>config_schema.xsd</file>
+	<file>languages/inishell_de.qm</file>
+
+	<file>doc/help.xml</file>
+	<file>doc/help_dev.xml</file>
+	<file>inishell_settings_minimal.xml</file>
+	<file>settings_dialog.xml</file>
+</qresource>
+
+<qresource>
+	<file>icons/flat-bw/index.theme</file>
+	
+	<file>icons/flat-bw/svg/application-exit.svg</file>
+	<file>icons/flat-bw/svg/code-context.svg</file>
+	<file>icons/flat-bw/svg/displaymathmode.svg</file>
+	<file>icons/flat-bw/svg/document-open.svg</file>
+	<file>icons/flat-bw/svg/document-print-preview.svg</file>
+	<file>icons/flat-bw/svg/document-revert.svg</file>
+	<file>icons/flat-bw/svg/document-save-as.svg</file>
+	<file>icons/flat-bw/svg/document-save.svg</file>
+	<file>icons/flat-bw/svg/edit-clear-all.svg</file>
+	<file>icons/flat-bw/svg/edit-copy.svg</file>
+	<file>icons/flat-bw/svg/edit-cut.svg</file>
+	<file>icons/flat-bw/svg/edit-delete.svg</file>
+	<file>icons/flat-bw/svg/edit-find.svg</file>
+	<file>icons/flat-bw/svg/edit-paste.svg</file>
+	<file>icons/flat-bw/svg/edit-redo.svg</file>
+	<file>icons/flat-bw/svg/edit-select-all.svg</file>
+	<file>icons/flat-bw/svg/edit-undo.svg</file>
+	<file>icons/flat-bw/svg/folder-open.svg</file>
+	<file>icons/flat-bw/svg/format-text-lowercase.svg</file>
+	<file>icons/flat-bw/svg/format-text-uppercase.svg</file>
+	<file>icons/flat-bw/svg/go-previous.svg</file>
+	<file>icons/flat-bw/svg/go-up.svg</file>
+	<file>icons/flat-bw/svg/help-about.svg</file>
+	<file>icons/flat-bw/svg/help-contents.svg</file>
+	<file>icons/flat-bw/svg/internet-web-browser.svg</file>
+	<file>icons/flat-bw/svg/markasblank.svg</file>
+	<file>icons/flat-bw/svg/preferences-system.svg</file>
+	<file>icons/flat-bw/svg/tab-close.svg</file>
+	<file>icons/flat-bw/svg/tab-new.svg</file>
+	<file>icons/flat-bw/svg/unmarkasblank.svg</file>
+	<file>icons/flat-bw/svg/user-home.svg</file>
+	<file>icons/flat-bw/svg/utilities-system-monitor.svg</file>
+	<file>icons/flat-bw/svg/view-refresh.svg</file>
+	<file>icons/flat-bw/svg/view-sort.svg</file>
+	<file>icons/flat-bw/svg/window-close.svg</file>
+</qresource>
+
+<qresource>
+	<file>icons/elementary/index.theme</file>
+	
+	<file>icons/elementary/svg/application-exit.svg</file>
+	<file>icons/elementary/svg/code-context.svg</file>
+	<file>icons/elementary/svg/displaymathmode.svg</file>
+	<file>icons/elementary/svg/document-open.svg</file>
+	<file>icons/elementary/svg/document-print-preview.svg</file>
+	<file>icons/elementary/svg/document-revert.svg</file>
+	<file>icons/elementary/svg/document-save-as.svg</file>
+	<file>icons/elementary/svg/document-save.svg</file>
+	<file>icons/elementary/svg/edit-clear-all.svg</file>
+	<file>icons/elementary/svg/edit-copy.svg</file>
+	<file>icons/elementary/svg/edit-cut.svg</file>
+	<file>icons/elementary/svg/edit-delete.svg</file>
+	<file>icons/elementary/svg/edit-find.svg</file>
+	<file>icons/elementary/svg/edit-paste.svg</file>
+	<file>icons/elementary/svg/edit-redo.svg</file>
+	<file>icons/elementary/svg/edit-select-all.svg</file>
+	<file>icons/elementary/svg/edit-undo.svg</file>
+	<file>icons/elementary/svg/folder-open.svg</file>
+	<file>icons/elementary/svg/format-text-lowercase.svg</file>
+	<file>icons/elementary/svg/format-text-uppercase.svg</file>
+	<file>icons/elementary/svg/go-previous.svg</file>
+	<file>icons/elementary/svg/go-up.svg</file>
+	<file>icons/elementary/svg/help-about.svg</file>
+	<file>icons/elementary/svg/help-contents.svg</file>
+	<file>icons/elementary/svg/internet-web-browser.svg</file>
+	<file>icons/elementary/svg/markasblank.svg</file>
+	<file>icons/elementary/svg/preferences-system.svg</file>
+	<file>icons/elementary/svg/tab-close.svg</file>
+	<file>icons/elementary/svg/tab-new.svg</file>
+	<file>icons/elementary/svg/unmarkasblank.svg</file>
+	<file>icons/elementary/svg/user-home.svg</file>
+	<file>icons/elementary/svg/utilities-system-monitor.svg</file>
+	<file>icons/elementary/svg/utilities-terminal.svg</file>
+	<file>icons/elementary/svg/view-refresh.svg</file>
+	<file>icons/elementary/svg/view-sort.svg</file>
+	<file>icons/elementary/svg/window-close.svg</file>
+</qresource>
+
+</RCC>

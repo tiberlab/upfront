@@ -1,0 +1,859 @@
+<!--
+/*****************************************************************************/
+/*  Copyright 2019 WSL Institute for Snow and Avalanche Research  SLF-DAVOS  */
+/*****************************************************************************/
+/* This file is part of INIshell.
+   INIshell is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   INIshell is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with INIshell.  If not, see <http://www.gnu.org/licenses/>.
+*/
+-->
+
+<!--
+This is the developer's guide which is meant for people who want to use INIshell to control
+their own simulation software. It showcases all panels and lists their options.
+-->
+
+<inishell_config>
+
+	<!-- INTRODUCTION -->
+
+	<parameter type="label" label="&lt;h3&gt;Principles of &lt;i&gt;INIshell&lt;/i&gt;&lt;/h3&gt;" color="#50056b">
+		<section name="Introduction" color="#50056b"/>
+	</parameter>
+	<parameter type="helptext" wrap="true">
+		<section name="Introduction"/>
+		<help>&lt;i&gt;INIshell&lt;/i&gt; aims to facilitate controlling software with text-based settings which is normally run in a terminal. With fast-changing simulation software and fast-changing requirements it needs to be flexible enough to quickly adapt to changes in the controlled program's available settings and syntax.</help>
+	</parameter>
+	<parameter type="helptext" wrap="true">
+		<section name="Introduction"/>
+		<help>This is realized by reading an application's available settings at runtime from an XML file. This XML file describes to &lt;i&gt;INIshell&lt;/i&gt; which parameters the controlled model knows, and of what type they are. &lt;i&gt;INIshell&lt;/i&gt; takes this information and builds a panel the user can interact with to change the specific key. This way, if the controlled software changes, these changes only need to be reflected in the describing XML file, but not in &lt;i&gt;INIshell&lt;/i&gt;'s source code. &lt;br&gt;</help>
+	</parameter>
+	<frame caption="Introduction to using INIshell as developer" color="#50056b">
+		<section name="Introduction"/>
+		<parameter type="helptext" wrap="true">
+			<help>An &lt;i&gt;INIshell&lt;/i&gt; file needs an appropriate header to be identified as a file that contains an application's configuration:&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;inishell_config application=&quot;SNOWPACK&quot;&amp;gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;...&lt;br&gt;&amp;lt;/inishell_config&amp;gt;&lt;/code&gt;&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Or, to indicate that this is a simulation's configuration:&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;inishell_config simulation=&quot;Weißfluhjoch&quot;&amp;gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;...&lt;br&gt;&amp;lt;/inishell_config&amp;gt;&lt;/code&gt;&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>There is no logical difference between applications and simulations as far as &lt;i&gt;INIshell&lt;/i&gt; is concerned; so the only thing the different identifier does is to put it in the respective &lt;font color=&quot;#7c00ad&quot;&gt;Applications&lt;/font&gt; or &lt;font color=&quot;#7c00ad&quot;&gt;Simulations&lt;/font&gt; workflow tab. Thus, the principles discussed here apply to both setups.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Within these tags reside the descriptions of the elements that &lt;i&gt;INIshell&lt;/i&gt; should display. For each text panel, number panel, help text, ..., there is an XML node for it concisely telling &lt;i&gt;INIshell&lt;/i&gt; the formatting options. For example, a simple text panel for modifying the INI key &lt;code&gt;TEXT_FIELD&lt;/code&gt; may look like this:&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;parameter key=&quot;TEXT_FIELD&quot; type=&quot;text&quot;/&amp;gt;&lt;/code&gt;&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>More complicated panels may have child panels; for example, each item of a dropdown element can display different additional panels. This can be nested indefinitely allowing for quite complex settings. See the different tabs of this help file for which options the panels support.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>The same is true for the workflow panel (the left side of &lt;i&gt;INIshell&lt;/i&gt;). Only a few tabs are fixed, the rest is also read from XML, albeit with different panels available. See the &lt;font color=&quot;#7c00ad&quot;&gt;Workflow&lt;/font&gt; section of this help.</help>
+		</parameter>
+	</frame>
+	<frame caption="First example" color="#761499">
+		<section name="Introduction"/>
+		<parameter type="helptext" wrap="true">
+			<help>Put the panel description in the main XML and you have a first valid inishell config file:&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;inishell_config application=&quot;my_application&quot;&amp;gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;parameter key=&quot;TEXT_FIELD&quot; type=&quot;text&quot;/&amp;gt;&lt;br&gt;&amp;lt;/inishell_config&amp;gt;&lt;/code&gt;&lt;br&gt;</help>
+		</parameter>
+	</frame>
+
+	<!-- WORKFLOW -->
+
+	<parameter type="label" label="&lt;h3&gt;Workflow panel&lt;/h3&gt;">
+		<section name="Workflow" color="#50056b"/>
+	</parameter>
+	<section name="Workflow" color="#50056b"> <!-- another way to give a section name for all child nodes -->
+		<parameter type="helptext" wrap="true">
+			<help>See the user's guide under section &lt;font color=&quot;#4e81d4&quot;&gt;Configuring simulations&lt;/font&gt; for an introduction about the workflow panel. XML nodes within the parent &lt;code&gt;&amp;lt;workflow&amp;gt;&lt;/code&gt; node (must have exactly this name) are parsed with different available panels than for the main panel.&lt;br&gt;</help>
+		</parameter>
+		<frame caption="Structure" color="#000096">
+			<parameter type="helptext" wrap="true">
+				<help>Somewhere in the XML document and its includes there must be one or more &lt;b&gt;&amp;lt;workflow&amp;gt;&lt;/b&gt; sections to add workflow panels. In there, you separate the workflow tabs by &lt;b&gt;&amp;lt;section&amp;gt;&lt;/b&gt; nodes, in which you can build &lt;b&gt;&amp;lt;element&amp;gt;&lt;/b&gt; nodes. Note that in order to remember that these sections have nothing to do with our INI sections, they have a &lt;code&gt;caption&lt;/code&gt; instead of a &lt;code&gt;name&lt;/code&gt;. The code in the next frame is a fully defined workflow tab.</help>
+			</parameter>
+		</frame>
+		<frame caption="Buttons" color="#000096">
+			<parameter type="helptext" wrap="true">
+				<help>A &lt;b&gt;button&lt;/b&gt; can have one or more system commands that it will run, specified in separate &lt;code&gt;&amp;lt;command&amp;gt;&lt;/code&gt; nodes:&lt;br&gt;</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>&lt;code&gt;&amp;lt;workflow&amp;gt;&lt;br&gt;
+					&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;section caption=&quot;My Workflow Panel&quot;&amp;gt;&lt;br&gt;
+					&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;element caption=&quot;Run experiment&quot; type=&quot;button&quot;&amp;gt;&lt;br&gt;
+					&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;command&amp;gt;snowpack -c %ini_wfj -e &lt;b&gt;%end_date_wfj&lt;/b&gt;&amp;lt;/command&amp;gt;&lt;br&gt;
+					&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;command&amp;gt;setpath(&lt;b&gt;%meteo_out&lt;/b&gt;, simulations/example_simulation/output)&amp;lt;/command&amp;gt;&lt;br&gt;
+					&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/element&amp;gt;&lt;br&gt;
+					&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/section&amp;gt;&lt;br&gt;
+					&amp;lt;/workflow&amp;gt;/code&gt;&lt;br&gt;</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>A button can perform the following operations if put in a &lt;code&gt;command&lt;/code&gt;:&lt;ul&gt;
+					&lt;li&gt;Run a system command like shown above&lt;/li&gt;
+					&lt;li&gt;Open an URL in the browser with the following syntax: &lt;code&gt;openurl(https://www.slf.ch)&lt;/code&gt;&lt;/li&gt;
+					&lt;li&gt;Click another button (e. g. for a &quot;Run all&quot; button) like so: &lt;code&gt;button(%button_id)&lt;/code&gt;&lt;/li&gt;
+					&lt;li&gt;Navigate a &lt;code&gt;Path&lt;/code&gt; element (cf. the &quot;Path view&quot; segment) via &lt;code&gt;setpath(%element_id, path/to/simulation)&lt;/code&gt;&lt;/li&gt;
+					&lt;li&gt;A button turns into a &quot;Stop process&quot; button when running a system command.&lt;/li&gt;
+					&lt;/ul&gt;</help>
+			</parameter>
+		</frame>
+		<frame caption="Text fields" color="#000096">
+			<parameter type="label" label="Referencing elements:" underline="true"/>
+			<parameter type="helptext" wrap="true">
+				<help>Elements can be given a key to reference them. In the example above, we have referenced two other elements with the syntax &lt;code&gt;%id_of_element&lt;/code&gt;. The corresponding element to &lt;code&gt;ini_wfj&lt;/code&gt; could look like the following. See the provided Weißfluhjoch &lt;code&gt;workflow_wfj.xml&lt;/code&gt; for the full syntax.&lt;br&gt;</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>&lt;code&gt;&amp;lt;element id=&quot;&lt;b&gt;ini_wfj&lt;/b&gt;&quot; type=&quot;text&quot; default=&quot;simulations/example_simulation/io_res5exp.ini&quot;/&amp;gt;&lt;/code&gt;</help>
+			</parameter>
+		</frame>
+		<frame caption="Default arguments" color="#000096">
+			<parameter type="helptext" wrap="true">
+				<help>As you can see above, you can supply default arguments for the elements you build.</help>
+			</parameter>
+		</frame>
+		<frame caption="Substitutions" color="#000096">
+			<parameter type="helptext" wrap="true">
+				<help>The following dynamic substitutions are available:</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>&lt;ul&gt;
+					&lt;li&gt;&lt;code&gt;%element_id&lt;/code&gt; to reference another workflow panel element&lt;/li&gt;
+					&lt;li&gt;&lt;code&gt;${inifile}&lt;/code&gt; for the INI file that is currently opened&lt;/li&gt;
+					&lt;li&gt;&lt;code&gt;${key:my_ini_key}&lt;/code&gt; to reference currently known INI values&lt;/li&gt;
+					&lt;/ul&gt;</help>
+			</parameter>
+		</frame>
+		<frame caption="Date/time pickers" color="#000096">
+			<parameter type="helptext" wrap="true">
+				<help>A date/time picker is avaiable via the &lt;code&gt;datetime&lt;/code&gt; identifier:</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>&amp;lt;element id=&quot;&lt;b&gt;end_date_wfj&lt;/b&gt;&quot; type=&quot;datetime&quot; default=&quot;1986-12-25T18:16&quot;/&amp;gt;</help>
+			</parameter>
+		</frame>
+		<frame caption="Path views" color="#000096">
+			<parameter type="helptext" wrap="true">
+				<help>A specific folder can be set for which the contents are displayed in a folder view element called by the &lt;code&gt;path&lt;/code&gt; tag. You can either set a folder in the &lt;code&gt;path=&quot;...&quot;&lt;/code&gt; attribute, or the path can be set at runtime with a button (or you can leave it empty).&lt;br&gt;</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>&lt;code&gt;&amp;lt;element type=&quot;path&quot; id=&quot;meteo_out&quot;/&amp;gt;&lt;/code&gt;&lt;br&gt;</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>To change the directory to point to with a button click, use a button command like this:&lt;br&gt;</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>&lt;code&gt;&amp;lt;command&amp;gt;setpath(&lt;b&gt;%meteo_out&lt;/b&gt;, simulations/example_simulation/output)&amp;lt;/command&amp;gt;&lt;/code&gt;</help>
+			</parameter>
+		</frame>
+		<frame caption="Checkboxes" color="#000096">
+			<parameter type="helptext" wrap="true">
+				<help>Show checkbox to get a boolean value from. Example:</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>&amp;lt;element id="workflow_checkbox" type="checkbox" caption="A checkbox can return &lt;code&gt;TRUE&lt;/code&gt; or &lt;code&gt;FALSE&lt;/code&gt;."/&amp;gt;&lt;br&gt;
+					&amp;lt;element caption="Test checkbox" type="button"&amp;gt;&lt;br&gt;
+					&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;command&amp;gt;echo Checkbox state: %workflow_checkbox&amp;lt;/command&amp;gt;&lt;br&gt;
+					&amp;lt;/element&amp;gt;</help>
+			</parameter>
+		</frame>
+		<frame caption="Labels" color="#000096">
+			<parameter type="helptext" wrap="true">
+				<help>Info labels can be shown via a &lt;code&gt;label&lt;/code&gt; node and can be colored / styled with HTML syntax:&lt;br&gt;</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>&lt;code&gt;&amp;lt;element type=&quot;label&quot; caption=&quot;Weißfluhjoch 1996&quot;/&amp;gt;&lt;/code&gt;</help>
+			</parameter>
+		</frame>
+		<frame caption="Working directory" color="#000096">
+			<parameter type="helptext" wrap="true">
+				<help>If the workflow incorporates actions such as running programs, a dropdown menu to set the current working directory will be generated automatically.</help>
+			</parameter>
+		</frame>
+	</section>
+
+	<!-- SECTIONS -->
+
+	<parameter type="label" label="&lt;h3&gt;Sections&lt;/h3&gt;" color="#50056b">
+		<section name="Sections" color="#50056b"/>
+	</parameter>
+	<parameter type="helptext" wrap="true">
+		<section name="Sections"/>
+		<help>Sections are sections in the INI file and displayed in the main panel's tab bar. Each parameter must have a section; if none is given, it will be deafulted to &lt;code&gt;[General]&lt;/code&gt;.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Ways of specifying a section for the panel" color="#50056b">
+		<section name="Sections"/>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;ul&gt;
+				&lt;li&gt;Each frame/parameter can have a &lt;code&gt;section&lt;/code&gt; tag as child node.&lt;/li&gt;
+				&lt;li&gt;Parameters that don't have a parent section will be defaulted to the default section at the top level.&lt;/li&gt;
+				&lt;li&gt;Children can not switch parents, so the parent's section counts.&lt;/li&gt;
+				&lt;li&gt;But you can supply as many &lt;code&gt;parent&lt;/code&gt; sections as you like. Then each child can tell in a list of their own &lt;code&gt;section&lt;/code&gt; tags if it should be built for this specific section or not.&lt;/li&gt;
+				&lt;li&gt;This is also possible for some child panel's items. For example, an &lt;code&gt;Alternative&lt;/code&gt; panel (a dropdown list) can be set to contribute both to the &lt;code&gt;[INPUT]&lt;/code&gt; and the &lt;code&gt;[OUTPUT]&lt;/code&gt; section. The individual items can be set to appear in either or both of the sections by giving &lt;code&gt;section&lt;/code&gt; child nodes.&lt;/li&gt;
+				&lt;li&gt;You may alternatively supply the &lt;code&gt;section&lt;/code&gt; attribute to the panel's node itself.&lt;/li&gt;
+				&lt;li&gt;And lastly, you can construct a &lt;code&gt;&amp;lt;section&amp;gt;&lt;/code&gt; parent node in which you put children.&lt;/li&gt;
+				&lt;li&gt;The section format (color, capitalization) is taken from the first occurrence of the &lt;code&gt;section&lt;/code&gt; tag.&lt;/li&gt;
+				&lt;li&gt;(Note that currently coloring is not supported uniformly, so if it doesn't work try a different way of giving the section.)&lt;/li&gt;
+				&lt;/ul&gt;</help>
+		</parameter>
+	</frame>
+	<parameter type="helptext" wrap="true" section="Sections">
+		<help>&lt;br&gt;Have a look at this help file's source code (&lt;code&gt;./inishell --dump_help&lt;/code&gt;, cf. command line tools). Up until now we chose the method of supplying a &lt;code&gt;section&lt;/code&gt; child node to tell the parent to go into a certain section. Starting with this frame, we sometimes supply it in the attributes. Later, we will use dedicated &amp;lt;&lt;code&gt;section&lt;/code&gt;&amp;gt; nodes.</help>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="Sections">
+		<help>The following XML node will construct an Alternative panel that appears in both the &lt;code&gt;[INPUT]&lt;/code&gt; and &lt;code&gt;[OUTPUT]&lt;/code&gt; sections. But only one of &lt;code&gt;SNOWPACK_IN/OUT&lt;/code&gt; will be in each section:&lt;br&gt;</help>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="Sections">
+		<help>&lt;code&gt;&amp;lt;parameter key=&quot;IO_FORMAT&quot; type=&quot;alternative&quot;&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;section name=&quot;INPUT&quot;/&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;section name=&quot;OUTPUT&quot;/&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;CSV&quot;/&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;SNOWPACK_IN&quot;&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;section name=&quot;Input&quot;/&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/option&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;SNOWPACK_OUT&quot;&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;section name=&quot;Output&quot;/&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/option&amp;gt;&lt;br&gt;
+			&amp;lt;/parameter&amp;gt;&lt;/code&gt;&lt;br&gt;</help>
+	</parameter>
+	<frame caption="References" color="#b80244" section="sections">
+		<parameter type="helptext" wrap="true">
+			<help>We have already encountered include files, which must be valid XML documents (they at least need a parent node). The following mechanism to reference nodes from within the document is also always available:</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Reference to another part of the file:&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;&lt;b&gt;reference name&lt;/b&gt;=&quot;METEOPARAMETERS&quot;/&amp;gt;&lt;/code&gt;&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>The node being referenced:&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;&lt;b&gt;parametergroup name&lt;/b&gt;=&quot;METEOPARAMETERS&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;TA&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;RH&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;VW&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;DW&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;P&quot;/&amp;gt;&lt;br&gt;
+				&amp;lt;/parametergroup&amp;gt;&lt;/b&gt;</help>
+		</parameter>
+	</frame>
+
+	<!-- FRAMES -->
+
+	<parameter type="label" label="&lt;h3&gt;Frames&lt;/h3&gt;" color="#50056b">
+	<section name="Frames" color="#50056b"/>
+	</parameter>
+	<parameter type="helptext" wrap="true">
+		<section name="Frames"/>
+		<help>&lt;b&gt;Frames&lt;/b&gt; are a visual grouping element. Most of the panels in this help file are enclosed in frames.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="This is a frame" color="#0000ff">
+		<section name="Frames"/>
+		<parameter type="helptext" wrap="true">
+			<help>Frames can be colored with &lt;code&gt;color&lt;/code&gt; for the box and text, and &lt;code&gt;background_color&lt;/code&gt; for the background color.&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;frame caption=&quot;This is a frame&quot; color=&quot;#0000ff&quot;&amp;gt;&lt;/code&gt;</help>
+		</parameter>
+	</frame>
+	<parameter type="helptext" wrap="true" section="Frames">
+		<help>&lt;br&gt;With the following code a frame can be given a background color:&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Note" color="black" background_color="#f5f5f5">
+		<section name="Frames"/>
+		<parameter type="helptext" wrap="true">
+			<help>From now on we trust that you have an understanding of how it works and can look up the XML nodes for what is shown here in the help file XMLs (&lt;code&gt;./inishell --dump_help&lt;/code&gt;), as well as in the shipped application XMLs. If you like a panel, just look for its key in the XML to see how it's done. (This help file is written in valid application syntax, only with a strong focus on help texts.) So from now on, the notation in here is shortened a bit.&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true" section="Frames">
+			<help>&lt;code&gt;&amp;lt;frame caption=&quot;Note&quot; color=&quot;black&quot; background_color=&quot;#f5f5f5&quot;&amp;gt;&lt;/code&gt;</help>
+		</parameter>
+	</frame>
+	<parameter type="spacer" height="1000" section="Frames"/>
+	<frame caption="Options for all panels" color="#b80244">
+		<section name="Frames" color="#7c00ad"/>
+		<parameter type="helptext" wrap="true">
+			<help>The following options work with most input panels:&lt;ul&gt;
+				&lt;li&gt;Setting that this parameter is non-optional with &lt;code&gt;optional=&quot;false&quot;	&lt;/code&gt;&lt;/li&gt;
+				&lt;li&gt;Setting the default value via &lt;code&gt;default=&quot;default_value&quot;&lt;/code&gt;&lt;/li&gt;
+				&lt;li&gt;Setting a different &lt;code&gt;caption&lt;/code&gt; and styling it&lt;/li&gt;
+				&lt;/ul&gt;</help>
+		</parameter>
+	</frame>
+
+	<!-- HELPTEXTS and LABELS -->
+
+	<parameter type="label" label="&lt;h3&gt;Helptext and Label elements&lt;/h3&gt;" color="#7c00ad">
+		<section name="Help and Labels" color="#7c00ad"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="Help and Labels">
+		<help>A &lt;b&gt;&amp;lt;helptext&amp;gt;&lt;/b&gt; panel displays a piece of information. So does a &lt;b&gt;&amp;lt;label&amp;gt;&lt;/b&gt;, which is usually associated with an INI key but can also be set separately. They can be used in the following ways.</help>
+	</parameter>
+	<parameter type="helptext" wrap="true" help="Helptexts can also have tooltips.">
+		<section name="Help and Labels"/>
+		<help>&lt;br&gt;This is a standalone help text. It will also display a tool tip if you hover the mouse over it, like all panels can.&lt;br&gt;Per default, the tooltip is set to the panel's key. To add a custom tooltip to a panel, specify the &lt;code&gt;help&lt;/code&gt; attribute in the panel itself:&lt;br&gt;&lt;code&gt;key="INPUT_TEXT" type="text" help="An input text"&lt;/code&gt;</help>
+	</parameter>
+	<parameter key="INPUT_TEXT" type="text" size="large" section="Help and Labels" help="An input text">
+		<help>A parameter's help is shown to the right if a &lt;code&gt;&amp;lt;help&amp;gt;&lt;/code&gt; node is given as a child to the parameter node. It can span as many lines as you wish, and you can use HTML styling, e. g. &amp;lt;br&amp;gt; for a line break.</help>
+	</parameter>
+	<parameter type="helptext" section="Help and Labels" nowrap="true">
+		<help>For standalone help texts you can supply either &lt;code&gt;wrap=&quot;true&quot;&lt;/code&gt; to enable dynamic wrapping (like it is done in this whole help file), or disable line wrapping with &lt;code&gt;wrap=&quot;false&quot;&lt;/code&gt;.</help>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="Help and Labels">
+		<help>You can use &lt;b&gt;&lt;font color=&quot;#7c00ad&quot;&gt;HTML styling&lt;/font&gt;&lt;/b&gt; in all helptexts (see the &lt;font color=&quot;#7c00ad&quot;&gt;Styling&lt;/font&gt; tab), otherwise they will have a uniform look.</help>
+	</parameter>
+	<parameter key="SOME_NAME_WE_DONT_WANT_TO_SHOW_DIRECTLY" label="Pick a name: " type="text" section="Help and Labels">
+		<help>It is possible to give a &lt;code&gt;&amp;lt;label&amp;gt;&lt;/code&gt; attribute to the panel node in order to display a different label than the INI key itself:&lt;br&gt;&lt;code&gt;&amp;lt;parameter key=&quot;SOME_NAME_WE_DONT_WANT_TO_SHOW_DIRECTLY&quot; caption=&quot;Pick a name: &quot; type=&quot;text&quot;&amp;gt;&lt;/code&gt;</help>
+	</parameter>
+	<frame caption="Label width" section="Help and Labels">
+		<parameter type="helptext" wrap="true">
+			<help>A key label's width is either a fixed with (the first "column"), or if that is not enough it is extended to fit the content. Sometimes however you will have a list of INI keys that get scrambled together this way, alternating between a fixed and dynamic width. For this reason you can set to use the second "column" by specifying &lt;code&gt;longlabel="true"&lt;/code&gt;.</help>
+			<parameter key="LONG_TEXT" type="text" label="This is a long description of an INI key:" longlabel="true">
+				<help>Here we have specified long label texts.</help>
+			</parameter>
+			<parameter key="NORMAL_TEXT" type="text" longlabel="true">
+				<help>This way the longer text can be aligned with the short one.</help>
+			</parameter>
+		</parameter>
+	</frame>
+
+	<!-- TEXTFIELD -->
+	<parameter type="label" label="&lt;h3&gt;Text input&lt;/h3&gt;" color="#7c00ad">
+		<section name="Text" color="#7c00ad"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="Text">
+		<help>A &lt;b&gt;&amp;lt;text&amp;gt;&lt;/b&gt; panel has the following options:&lt;ul&gt;
+			&lt;li&gt;&lt;code&gt;size=&quot;small/medium/large&quot;&lt;/code&gt;&lt;/li&gt;
+			&lt;li&gt;It will automatically scan for arithmetic expressions, environment variables, and INI keys in the shown form.&lt;/li&gt;
+			&lt;li&gt;Or, setting &lt;code&gt;lenient="true"&lt;/code&gt; will make it parse for arithmetic expressions without pre- and postfix&lt;/li&gt;
+			&lt;li&gt;&lt;code&gt;validate=&quot;your_regex&quot;&lt;/code&gt; Regular expression to check text against&lt;/li&gt;
+			&lt;li&gt;&lt;code&gt;placeholder=&quot;placeholder text&quot;&lt;/code&gt; Set a placeholder text for empty text field&lt;/li&gt;
+			&lt;/ul&gt;&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Text input" section="Text" color="#7c00ad">
+		<parameter key="SHORT_TEXT" type="text"/>
+		<parameter key="ENVIRONMENT_VARIABLE" type="text" default="${env:USER}">
+			<help>key=&quot;ENVIRONMENT_VARIABLE&quot; type=&quot;text&quot; size=&quot;medium&quot; default=&quot;${env:USER}&quot;</help>
+		</parameter>
+		<parameter key="INI_KEY" label="Reference another INI key:" type="text" default="${TEXT::SHORT_TEXT}"/>
+		<parameter key="FORMULA" label="Enter arithmetic expression:" type="text" size="large" default="${{pi+sin(10)}}"/>
+		<parameter key="INVALID_FORMULA" label="An invalid formula:" type="text" size="large" default="${{20+x-}}"/>
+		<parameter key="COORDINATES" type="text" default="latlon(46.81206, 9.84721)"/>
+		<parameter key="FREE_FORMULA" label="Formula without pre/postfix:" type="text" size="large" lenient="true" default="60*60*24"/>
+		<parameter key="REGEX_VALIDATION" label="Check against regular expression:" type="text" validate="^(\w+)(\d+)$" default="STATION1">
+			<help>validate=&quot;^(\w+)(\d+)$&quot; (word plus number)</help>
+		</parameter>
+		<parameter key="PLACEHOLDER_TEXT" label="Display placholder for empty text:" type="text" placeholder="&lt;station ID&gt;"/>
+	</frame>
+
+	<!-- FILE INPUT -->
+
+	<parameter type="label" label="&lt;h3&gt;File input&lt;/h3&gt;" color="#7c00ad">
+		<section name="Files" color="#7c00ad"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="files">
+		<help>A &lt;b&gt;&amp;lt;file&amp;gt;&lt;/b&gt; resp. &lt;b&gt;&amp;lt;path&amp;gt;&lt;/b&gt; panel has the following options:&lt;ul&gt;
+			&lt;li&gt;Calling it &lt;code&gt;file&lt;/code&gt; or &lt;code&gt;path&lt;/code&gt; will allow to either choose a file or a directory.&lt;/li&gt;
+			&lt;li&gt;When the optional &lt;code&gt;mode=&quot;input/output&quot;&lt;/code&gt; attribute is given, a few more checks are enabled about the file (e. g. an input file should exist).&lt;/li&gt;
+			&lt;li&gt;Remember that these are warnings only, and the INI file will save normally.&lt;/li&gt;
+			&lt;li&gt;You can supply &lt;code&gt;&amp;lt;option extension=&quot;File type (*.ext)/&amp;gt;&quot;&lt;/code&gt; child nodes to filter for these file extensions.&lt;/li&gt;
+			&lt;/ul&gt;&lt;br&gt;</help>
+	</parameter>
+	<frame caption="File input" section="files" color="#7c00ad">
+		<parameter key="INPUT_FILE" type="file" mode="input" default="default.txt">
+			<help>&lt;code&gt;type=&quot;file&quot; mode=&quot;input&quot; default=&quot;default.txt&quot;&lt;/code&gt;</help>
+		</parameter>
+		<parameter key="FILE_INPUT" label="An input file with label:" type="file" mode="input" optional="false">
+			<help>&lt;code&gt;type=&quot;file&quot; mode=&quot;input&quot; optional=&quot;false&quot;&lt;/code&gt;</help>
+		</parameter>
+		<parmeter key="OUTPUT_PATH" type="path" mode="output"/>
+		<parameter key="FILE_OUTPUT" type="file" mode="output">
+			<option extension="HTML files (*.html *.htm)"/>
+			<option extension="Text Files (*.log *.txt *.dat)"/>
+			<help>&amp;lt;parameter key=&quot;FILE_OUTPUT&quot; type=&quot;file&quot; mode=&quot;output&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option extension=&quot;HTML files (*.html *.htm)&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option extension=&quot;Text Files (*.log *.txt *.dat)&quot;/&amp;gt;</help>
+		</parameter>
+	</frame>
+
+	<!-- NUMBERS -->
+
+	<parameter type="label" label="&lt;h3&gt;File input&lt;/h3&gt;" color="#7c00ad">
+		<section name="Numbers" color="#7c00ad"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="numbers">
+		<help>A &lt;b&gt;&amp;lt;number&amp;gt;&lt;/b&gt; panel has the following options:&lt;ul&gt;
+			&lt;li&gt;format=&quot;integer/integer+/decimal&quot;&lt;/li&gt;
+			&lt;li&gt;&lt;code&gt;min, max&lt;/code&gt; for minimum and maximum of the value&lt;/li&gt;
+			&lt;li&gt;&lt;code&gt;sign=&quot;true&quot;&lt;/code&gt; to always show the sign of the number&lt;/li&gt;
+			&lt;li&gt;&lt;code&gt;unit=&quot;my_unit&quot;&lt;/code&gt; to display a unit next to the number&lt;/li&gt;
+			&lt;li&gt;&lt;code&gt;notoggle=&quot;true&quot;&lt;/code&gt; to hide the toggle button for expression evaluation&lt;/li&gt;
+			&lt;li&gt;&lt;code&gt;wrap=&quot;true&quot;&lt;/code&gt; to have the arrow buttons wrap around the limits&lt;/li&gt;
+			&lt;li&gt;If you set a valid expression as default value, the panel will start in this state&lt;/li&gt;
+			&lt;/ul&gt;&lt;br&gt;</help>
+	</parameter>
+	<parameter key="INTEGER" type="number" format="integer" section="numbers"/>
+	<parameter key="POSITIVE_INTEGER" type="number" format="integer+" section="numbers">
+		<help>&lt;code&gt;type=&quot;number&quot; format=&quot;integer+&quot;&lt;/code&gt;</help>
+	</parameter>
+	<parameter key="FLOATING_POINT" type="number" format="decimal" section="numbers"/>
+	<parameter key="EXPRESSION" type="number" default="${{60*60*24}}" section="numbers"/>
+	<parameter key="LIMIT_INTEGER" label="Integer with limits and circular wrapping:" type="number" format="integer" min="12" max="24" wrap="true" section="numbers">
+		<help>&lt;code&gt;label=&quot;Integer...&quot; type=&quot;number&quot; format=&quot;integer&quot; min=&quot;12&quot; max=&quot;24&quot; wrap=&quot;true&quot;&lt;/code&gt;</help>
+	</parameter>
+	<parameter key="ANNOTATED_DOUBLE" sign="true" unit="days" precision="1" type="number" default="1.5" section="numbers" notoggle="true"/>
+
+	<!-- DATEPICKER -->
+
+	<parameter type="label" label="&lt;h3&gt;Datepicker&lt;/h3&gt;" color="#7c00ad">
+		<section name="Datepicker" color="#7c00ad"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="datepicker">
+		<help>A &lt;code&gt;&lt;b&gt;&amp;lt;datepicker&amp;gt;&lt;/b&gt;&lt;/code&gt; panel allows users to more comfortably enter a date and/or time.</help>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="datepicker">
+		<help>It has the following options:&lt;ul&gt;
+			&lt;li&gt;format=&quot;format_string&quot;&lt;/li&gt;
+			&lt;/ul&gt;&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Date / time pickers" section="datepicker" color="#7c00ad">
+		<parameter key="DATETIME" type="datetime">
+			<help>Date and time in default ISO formatting.</help>
+		</parameter>
+		<parameter key="TIME" type="datetime" format="hh:mm:ss" default="12:00:00">
+			<help>Time only via &lt;code&gt;format="hh:mm:ss"&lt;/code&gt;.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true" section="datepicker">
+			<help>Format strings can be anything Qt recognizes, default is ISO: &lt;code&gt;yyyy-MM-ddThh:mm:ss&lt;/code&gt;</help>
+		</parameter>
+	</frame>
+
+	<!-- CHECKBOX -->
+
+	<parameter type="label" label="&lt;h3&gt;Checkbox&lt;/h3&gt;" color="#7c00ad">
+		<section name="Checkbox" color="#7c00ad"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="checkbox">
+		<help>A &lt;code&gt;&lt;b&gt;&amp;lt;checkbox&amp;gt;&lt;/b&gt;&lt;/code&gt; panel stands for a &lt;code&gt;TRUE/FALSE&lt;/code&gt; choice. It will also handle &lt;code&gt;t/f&lt;/code&gt; and &lt;code&gt;0/1&lt;/code&gt; alternatively.&lt;br&gt;. It can have child panels that are displayed when the box is checked.</help>
+	</parameter>
+	<frame caption="Checkboxes" section="checkbox" color="#7c00ad">
+		<parameter key="RESAMPLING" type="checkbox">
+			<help>&amp;lt;parameter key=&quot;RESAMPLING&quot; type=&quot;checkbox&quot;&amp;gt;&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>You can set the key label and caption independently. Different to other panels if you omit a label it will be hidden, not display the key (because this is more common - supply in "label" if wanted).&lt;br&gt;</help>
+		</parameter>
+		<parameter key="RESAMPLING" caption="Enable resampling" type="checkbox">
+			<help>&lt;code&gt;caption=&quot;Enable resampling&quot;&lt;/code&gt;</help>
+		</parameter>
+		<parameter key="RESAMPLING" label="Perform resampling?" caption="Enable resampling" type="checkbox">
+			<help>&lt;code&gt;label=&quot;Perform resampling?&quot; caption=&quot;Enable resampling&quot;&lt;/code&gt;</help>
+		</parameter>
+		<parameter key="CHECKBOX_CHILD" caption="Check to view child panels" type="checkbox">
+			<option>
+				<parameter key="CHECKBOX_TEXT" type="text"/>
+				<parameter key="CHECKBOX_NUM" type="number"/>
+			</option>
+			<help>A checkbox with child panels.</help>
+		</parameter>
+	</frame>
+	<frame caption="Source code for a Checkbox with children" section="checkbox">
+		<parameter type="helptext">
+			<help>&amp;lt;parameter key="CHECKBOX_CHILD" caption="Check to view child panels" type="checkbox"&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;parameter key="CHECKBOX_TEXT" type="text"/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;parameter key="CHECKBOX_NUM" type="number"/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/option&amp;gt;&lt;br&gt;
+				&amp;lt;/parameter&amp;gt;</help>
+		</parameter>
+	</frame>
+
+	<!-- ALTERNATIVE -->
+
+	<parameter type="label" label="&lt;h3&gt;Alternative panel&lt;/h3&gt;" color="#900ac4">
+		<section name="Alternative" color="#900ac4"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="alternative">
+		<help>An &lt;code&gt;&lt;b&gt;&amp;lt;alternative&amp;gt;&lt;/b&gt;&lt;/code&gt; panel is a dropdown list the user can select from. It can show child panels for each individual item.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Alternatives" color="#7c00ad">
+		<section name="Alternative"/>
+		<parameter key="ALTERNATIVE_MANDATORY" type="alternative" optional="false">
+			<option value="TRUE"/>
+			<option value="FALSE"/>
+		</parameter>
+		<parameter key="OPTIONAL_ALTERNATIVE" type="alternative">
+			<option value="on"/>
+			<option value="off"/>
+		</parameter>
+		<parameter key="FREE_ALTERNATIVE" type="alternative" editable="true">
+			<option value="item A"/>
+			<option value="item B"/>
+		</parameter>
+		<parameter key="DIFFERENT_ALTERNATIVE" label="A verbose list of options:" type="alternative">
+			<option value="value 1" caption="This is value one"/>
+			<option value="value 2" caption="This is value two"/>
+			<help>A dropdown menu can have items that are labelled different to their value. Check the &lt;font color=&quot;#7c00ad&quot;&gt;Preview&lt;/font&gt; to verify this.</help>
+		</parameter>
+		<parameter key="CHILD_ALTERNATIVE" label="Dropdown with child elements:" type="alternative">
+			<option value="textbox_option">
+				<parameter key="OPTION_TEXTBOX" type="text"/>
+				<parameter key="OTHER_TEXTBOX" type="text"/>
+			</option>
+			<option value="number_option">
+				<parameter key="OPTION_NUMBER" type="number"/>
+			</option>
+			<option value="nested_option">
+				<parameter key="NESTED_ALTERNATIVE" type="alternative">
+					<option value="no_child" default="true"/>
+					<option value="nested_child">
+						<parameter key="NESTED_NUMBER" type="number"/>
+					</option>
+				</parameter>
+			</option>
+		</parameter>
+	</frame>
+	<frame caption="Child options" color="#7c00ad">
+		<section name="Alternative"/>
+		<parameter type="helptext" wrap="true">
+			<help>An &lt;code&gt;Alternative&lt;/code&gt; panel is one of the panels that can have child panels depending on which option is selected.&lt;br&gt;</help>
+		</parameter>
+		<parameter key="METEO" type="alternative">
+			<help>Choose your input path with meteo data</help>
+			<option value="SMET">
+				<parameter key="METEOPATH" type="path" mode="input"><help>Item help</help></parameter>
+			</option>
+			<option value="SNOWPACK"/>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&lt;br&gt;&amp;lt;parameter key=&quot;METEO&quot; type=&quot;alternative&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;help&amp;gt;&quot;...&quot;&amp;lt;/help&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;SMET&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;parameter key=&quot;METEOPATH&quot; type=&quot;path&quot; mode=&quot;input&quot;&amp;gt;&amp;lt;help&amp;gt;...&amp;lt;/help&amp;gt;&amp;lt;/parameter&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/option&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;SNOWPACK&quot;/&amp;gt;&lt;br&gt;
+				&amp;lt;/parameter&amp;gt;&lt;/code&gt;</help>
+		</parameter>
+	</frame>
+	<frame caption="Performance savings mode" color="#7c00ad" section="alternative">
+		<parameter type="helptext" wrap="true" section="alternative">
+			<help>Normally, all child panels of an Alternative panel are always built. This way, a user can switch between some different modes of operation and still keep their settings for all of them - even if currently unused.&lt;br&gt;
+				Some dropdown lists however are so complex that if they control a large number of INI keys, building all child panels for each setting has a considerable impact on performance. For this reason you can use the &lt;i&gt;pre-generate=false&lt;/i&gt; mode which will tell &lt;i&gt;INIshell&lt;/i&gt; to only build child panels on first request, i. e. when the list item is first selected. This mode is best suited for:&lt;ul&gt;
+				&lt;li&gt;Settings that will not change often. E. g. in &lt;i&gt;MeteoIO&lt;/i&gt; it will hardly ever be necessary to configure more than one input plugin at the same time and switch between them frequently.&lt;/li&gt;
+				&lt;li&gt;Settings where it is a reasonable assumption that the parent key is always found before child settings. E. g. in &lt;i&gt;MeteoIO&lt;/i&gt; we make request that TA::FILTERS1 = MIN must be found before TA::ARG1::MIN so that the child panels are built.&lt;/li&gt;
+				&lt;li&gt;Settings where you can set the default value to the parent that needs children.&lt;/li&gt;
+				&lt;/ul&gt;
+			Remember that unknown INI keys are transported to the output, so they will be there in any case, but they won't interact with the GUI if the pre-generate=false mode is not suitable for this setting. Enable this mode by setting &lt;code&gt;pre-generate="false"&lt;/code&gt; in the Alternative's attributes.</help>
+		</parameter>
+	</frame>
+	<parameter type="helptext" wrap="true" section="alternative">
+		<help>&lt;br&gt;Note: Giving a default argument to an Alternative panel, the decimals should match the given precision.</help>
+	</parameter>
+
+	<!-- CHOICE -->
+
+	<parameter type="choice" label="&lt;h3&gt;Choice&lt;/h3&gt;" color="#9d11d4">
+		<section name="Choice" color="#9d11d4"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="choice">
+		<help>A &lt;code&gt;&lt;b&gt;&amp;lt;choice&amp;gt;&lt;/b&gt;&lt;/code&gt; panel displays a list of checkboxes. Each of the checkboxes may show additional child panels, which can themselves show more options.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Multiple choice" color="#7c00ad" section="choice">
+		<parameter key="GENERATORS" type="choice" label="Data generators:">
+			<o value="STD_PRESS"><help>Choose from a list of options.</help></o>
+			<option value="CST">
+				<parameter key="@::CST::VALUE" type="number"/>
+				<help>For each of them, more configuration panels may be shown.</help>
+			</option>
+			<option value="SIN">
+				<parameter type="horizontal">
+					<option>
+						<parameter key="@::SIN::TYPE" type="alternative" optional="false">
+							<option value="yearly" help="Yearly period"/>
+							<option value="daily" help="Daily period" default="true"/>
+						</parameter>
+					</option>
+					<o><parameter key="@::SIN::MAX" type="number"/></o>
+					<o><parameter key="@::SIN::PHASE" type="number"/></o>
+				</parameter>
+				<help>Sinusoidal generator.</help>
+			</option>
+		</parameter>
+	</frame>
+	<frame caption="Source code" color="#000000" section="choice">
+		<parameter type="helptext" wrap="true">
+			<help>A &lt;code&gt;Choice&lt;/code&gt; panel has the following syntax. In each &lt;code&gt;option&lt;/code&gt; child node, you can start with a &lt;code&gt;parameter&lt;/code&gt; or &lt;code&gt;frame&lt;/code&gt; again. You can nest as many panels as you wish.&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;parameter key=&quot;CHOICE&quot; type=&quot;choice&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;...&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;parameter ... /&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;parameter ... /&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;...&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/option&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;...&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;...&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/option&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;....&lt;br&gt;
+				&amp;lt;/parameter&amp;gt;&lt;/code&gt;</help>
+		</parameter>
+	</frame>
+
+	<!-- CHECKLIST -->
+
+	<parameter type="label" label="&lt;h3&gt;Checklist&lt;/h3&gt;" color="#a91be0">
+		<section name="Checklist" color="#a91be0"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="checklist">
+		<help>A &lt;code&gt;&lt;b&gt;&amp;lt;checklist&amp;gt;&lt;/b&gt;&lt;/code&gt; panel has exactly the same syntax as a &lt;code&gt;&lt;b&gt;&amp;lt;choice&amp;gt;&lt;/b&gt;&lt;/code&gt; panel. Depending on the number of options a &lt;code&gt;choice&lt;/code&gt; panel can be more compact.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Checklist" color="#7c00ad" section="checklist">
+		<parameter key="GENERATORS" type="checklist">
+			<help>Choose a data generator</help>
+			<o value="STD_PRESS"></o>
+			<option value="CST">
+				<parameter key="@::CST::VALUE" type="number"/>
+			</option>
+			<option value="SIN">
+				<parameter type="horizontal">
+					<option>
+						<parameter key="@::SIN::TYPE" type="alternative" optional="false">
+							<option value="yearly" help="Yearly period"/>
+							<option value="daily" help="Daily period" default="true"/>
+						</parameter>
+					</option>
+					<o><parameter key="@::SIN::MAX" type="number"/></o>
+					<o><parameter key="@::SIN::PHASE" type="number"/></o>
+				</parameter>
+			</option>
+		</parameter>
+	</frame>
+
+	<!-- SELECTORS -->
+
+	<parameter type="label" label="&lt;h3&gt;Selectors&lt;/h3&gt;" color="#a91be0">
+		<section name="Selectors" color="#a91be0"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="selectors">
+		<help>Sometimes, you need to transport a parameter name or other text to the INI key. For example, you could need to set the INI key &lt;code&gt;TA::FILTER1 = MIN&lt;/code&gt;. We don't want an extra filter for each meteo parameter so we can use a shortcut for it: &lt;code&gt;%::FILTER1&lt;/code&gt;. This is what a &lt;code&gt;&lt;b&gt;&amp;lt;selector&amp;gt;&lt;/b&gt;&lt;/code&gt; does. If you don't disable it the user can also enter free text.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Parameter selector" section="selectors" color="#7c00ad">
+		<parameter key="FILTER" type="selector">
+			<option value="TA"/>
+			<option value="RH"/>
+			<parameter key="%::FILTER" type="alternative" template="true">
+				<o value="MIN"/>
+				<o value="MAX"/>
+			</parameter>
+		</parameter>
+	</frame>
+	<frame caption="Source code" color="#000000" section="selectors">
+		<parameter type="helptext" wrap="true">
+			<help>A &lt;code&gt;Selector&lt;/code&gt; panel has the following syntax. In a list of &lt;code&gt;option&lt;/code&gt; tags you supply the texts that the &lt;code&gt;Selector&lt;/code&gt; should offer. Additionally, to actually activate a panel for the parameters you must give the &lt;code&gt;&lt;b&gt;template=&quot;true&quot;&lt;/b&gt;&lt;/code&gt; attribute for the panel you want to construct with the parameter:&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;parameter key=&quot;FILTER&quot; type=&quot;selector&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;TA&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;option value=&quot;RH&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;parameter key=&quot;%::FILTER&quot; type=&quot;alternative&quot; template=&quot;true&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;o value=&quot;MIN&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;o value=&quot;MAX&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/parameter&amp;gt;&lt;br&gt;
+				&amp;lt;/parameter&amp;gt;&lt;/code&gt;</help>
+		</parameter>
+	</frame>
+	<frame color="#7c00ad" section="selectors">
+		<parameter key="FILTER" type="selector" editable="false">
+			<option value="TA"/>
+			<option value="RH"/>
+			<parameter key="%::FILTER" type="alternative" template="true">
+				<o value="MIN"/>
+				<o value="MAX"/>
+			</parameter>
+			<help>&lt;code&gt;key=&quot;FILTER&quot; type=&quot;selector&quot; editable=&quot;false&quot;&lt;/code&gt;</help>
+		</parameter>
+		<parameter key="TEXTMODE" label="No dropdown:" type="selector" textmode="true">
+			<parameter key="%::TEXTMODE" type="text" optional="false" template="true">
+				<help>&lt;code&gt;type=&quot;selector&quot; textmode=&quot;true&quot;&lt;/code&gt;</help>
+			</parameter>
+		</parameter>
+		<parameter key="TEXTMODE2" label="No dropdown, placeholder text:" type="selector" textmode="true" placeholder="&lt;ID&gt;">
+			<parameter key="%::TEXTMODE" type="text" optional="false" template="true">
+				<help>&lt;code&gt;type=&quot;selector&quot; textmode=&quot;true&quot;&lt; placeholder=&quot;true&quot;/code&gt;</help>
+			</parameter>
+		</parameter>
+	</frame>
+
+	<!-- REPLICATORS -->
+
+	<parameter type="label" label="&lt;h3&gt;Replicators&lt;/h3&gt;" color="#a91be0">
+		<section name="Replicators" color="#a91be0"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="replicators">
+		<help>A &lt;code&gt;&lt;b&gt;&amp;lt;replicator&amp;gt;&lt;/b&gt;&lt;/code&gt; panel can enumerate an INI key. For example, it can construct &lt;code&gt;STATION1, STATION2, ...&lt;/code&gt; from the INI key &lt;code&gt;STATION#&lt;/code&gt;.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Replicator" color="#7c00ad" section="replicators">
+		<parameter type="helptext" wrap="true">
+			<help>A replicator is activated by taking any other panel and adding the &lt;code&gt;&lt;b&gt;replicate=&quot;true&quot;&lt;/b&gt;&lt;/code&gt; attribute.&lt;br&gt;</help>
+		</parameter>
+		<parameter key="STATION#" type="text" replicate="true">
+			<help>&amp;lt;parameter key=&quot;STATION#&quot; type=&quot;text&quot; replicate=&quot;true&quot;/&amp;gt;</help>
+		</parameter>
+	</frame>
+
+	<!-- RASTERS -->
+
+	<parameter type="label" label="&lt;h3&gt;Rasters&lt;/h3&gt;" color="#a91be0">
+		<section name="Rasters" color="#a91be0"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="rasters">
+		<help>You have the &lt;code&gt;&lt;b&gt;&amp;lt;horizontal&amp;gt;&lt;/b&gt;&lt;/code&gt; and the &lt;code&gt;&lt;b&gt;&amp;lt;grid&amp;gt;&lt;/b&gt;&lt;/code&gt; identifiers at your disposal to create rastered layouts. This is most useful if a panel such as an Alternative panel displays child panels that should not use up too much space.&lt;br&gt;</help>
+	</parameter>
+	<parameter type="label" label="Horizontal layout of 3 items:" color="black">
+		<section name="rasters"/>
+	</parameter>
+	<parameter type="horizontal" section="rasters">
+		<o><frame color="black" background_color="black"/></o>
+		<o><frame color="black" background_color="black"/></o>
+		<o><frame color="black" background_color="black"/></o>
+	</parameter>
+	<parameter type="label" label="Regular 2x2 grid:" color="red" section="rasters"/>
+	<parameter type="grid" section="rasters">
+		<option row="1" column="1">
+			<frame color="red" background_color="red"/>
+		</option>
+		<o r="1" c="2"><frame color="red" background_color="red"/></o>
+		<o r="2" c="1"><frame color="red" background_color="red"/></o>
+		<o r="2" c="2"><frame color="red" background_color="red"/></o>
+	</parameter>
+	<parameter type="label" label="Irregular grid:" color="green" section="rasters"/>
+	<parameter type="grid" section="rasters">
+		<o r="1" c="2"><frame color="green" background_color="green"/></o>
+		<o r="2" c="1"><frame color="green" background_color="green"/></o>
+		<o r="2" c="2"><frame color="green" background_color="green"/></o>
+	</parameter>
+	<parameter type="label" label="Spanning elements:" color="blue" section="rasters"/>
+	<parameter type="grid" section="rasters">
+		<o r="1" c="1"><frame color="blue" background_color="blue"/></o>
+		<o r="1" c="2"><frame color="blue" background_color="blue"/></o>
+		<option row="2" column="1" colspan="2">
+			<parameter type="helptext">
+				<help>This is a helptext that spans two columns. The spanning only takes action if the space is actually needed.&lt;br&gt;</help>
+			</parameter>
+		</option>
+	</parameter>
+	<frame caption="Options for all panels" color="#b80244">
+		<section name="rasters" color="#7c00ad"/>
+		<parameter type="helptext" wrap="true">
+			<help>The following options work with most input panels:&lt;ul&gt;
+				&lt;li&gt;You can use &lt;b&gt;&lt;code&gt;&amp;lt;o&amp;gt;&amp;lt;/o&amp;gt;&lt;/code&gt;&lt;/b&gt; and &lt;b&gt;&lt;code&gt;&amp;lt;h&amp;gt;&amp;lt;/h&amp;gt;&lt;/code&gt;&lt;/b&gt; tags in many panels with options as a shortcut. This is mostly useful for gridded layouts; check the source for the grids above to see more shortcuts.&lt;/li&gt;
+				&lt;/ul&gt;</help>
+		</parameter>
+		<parameter type="spacer" height="100" section="rasters"/>
+		<parameter type="helptext" wrap="true" section="rasters">
+			<help>There is also a &lt;b&gt;spacer&lt;/b&gt; element available with the &lt;code&gt;width&lt;/code&gt; and &lt;code&gt;height&lt;/code&gt; attributes to put some space between elements, like it was done here.</help>
+		</parameter>
+	</frame>
+	<frame caption="Substitutions" color="#b80244">
+		<section name="rasters" color="#7c00ad"/>
+		<parameter type="helptext" wrap="true">
+			<help>You can use the &lt;code&gt;@&lt;/code&gt; sign to reference the grid's key:</help>
+		</parameter>
+		<parameter key="FILTER" type="horizontal">
+			<option>
+				<parameter key="@::MIN" type="number">
+					<help>&lt;code&gt;&amp;lt;parameter key=&quot;FILTER&quot; type=&quot;horizontal&quot;&amp;gt;&lt;br&gt;
+						&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;o&amp;gt;&amp;lt;parameter key=&quot;@::MIN&quot; type=&quot;number&quot;&amp;gt;&amp;lt;/parameter&amp;gt;&amp;lt;/o&amp;gt;&lt;br&gt;
+						&amp;lt;/parameter&amp;gt;&lt;/code&gt;</help>
+				</parameter>
+			</option>
+		</parameter>
+	</frame>
+
+	<!-- STYLING -->
+
+	<parameter type="label" label="&lt;h3&gt;Text styling&lt;/h3&gt;" color="#bd28f7">
+		<section name="Style" color="#bd28f7"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="style">
+		<help>Help texts and labels can be styled in various ways. The  following attributes are often available: &lt;code&gt;font, font_size, bold, italic, color, underline, background_color&lt;/code&gt;. If there is a second element to style, for example the caption of a check box (in addition to the label), this is referenced with &lt;code&gt;caption_color, caption_font, ...&lt;/code&gt;.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Text styling" color="#7c00ad">
+		<section name="Style"/>
+		<parameter label="BOLD_KEY" type="text" bold="true">
+			<help>&lt;code&gt;&amp;lt;parameter label=&quot;BOLD_KEY&quot; type=&quot;label&quot; bold=&quot;true&quot;&amp;gt;&lt;/code&gt;</help>
+		</parameter>
+		<parameter label="ITALIC_KEY" type="label" italic="true"/>
+		<parameter label="COLORED_KEY" type="label" color="red"/>
+		<parameter label="UNDERLINED_KEY" type="label" underline="true"/>
+		<parameter label="A_DIFFERENT_FONT" type="label" font="Times New Roman"/>
+		<parameter type="spacer" height="50"/>
+		<parameter key="CHECKBOX" type="checkbox" color="darkgreen" caption="enabled" caption_color="#00adad">
+			<help>&lt;code&gt;&amp;lt;parameter key=&quot;CHECKBOX&quot; type=&quot;checkbox&quot; color=&quot;darkgreen&quot; caption=&quot;enabled&quot; caption_color=&quot;#00adad&quot;/&amp;gt;&lt;/code&gt;</help>
+		</parameter>
+		<parameter type="spacer" height="50"/>
+		<frame key="yellow" caption="Colored frames" color="#870012">
+			<frame color="black" background_color="#ffe299">
+				<parameter key="PROMINENT_KEY" type="text"/>
+			</frame>
+			<parameter type="horizontal">
+				<o><frame key="red" color="red"/></o>
+				<o><frame key="blue" color="lightblue"/></o>
+				<o><frame key="magenta" background_color="magenta"/></o>
+				<o><frame key="green" background_color="green"/></o>
+			</parameter>
+		</frame>
+		<parameter type="spacer" height="50"/>
+		<parameter type="horizontal">
+			<option>
+				<parameter key="CHECKLIST_ITEMS" type="checklist" color="darkred">
+					<option value="an item" bold="true"/>
+					<option value="another item" italic="true"/>
+					<option value="third item" color="red"/>
+				</parameter>
+			</option>
+			<o><parameter type="spacer" w="50"/></o>
+			<option>
+				<parameter key="CHOICE" type="choice" color="darkred">
+					<option value="check one" italic="true"/>
+					<option value="check two" color="blue"/>
+					<option value="check three" underline="true"/>
+				</parameter>
+			</option>
+			<o><parameter type="spacer" w="50"/></o>
+			<option>
+				<parameter key="ALTERNATIVE_ITEMS" type="alternative" color="darkred">
+					<option value="first option" bold="true"/>
+					<option value="second option" italic="true"/>
+					<option value="third option" color="red"/>
+				</parameter>
+			</option>
+		</parameter>
+	</frame>
+	<parameter type="helptext" wrap="true" section="style">
+		<help>&lt;br&gt;Plus, within help texts and labels you can use HTML styling in the text itself like it is done throughout this document. Just watch out that you usually need to escape XML characters:&lt;br&gt;</help>
+	</parameter>
+	<frame caption="HTML styling" section="style">
+		<parameter type="label" label="&lt;h4&gt;This is a &amp;lt;h4&amp;gt; header given in a Label&lt;/h4&lt;br&gt;and a &amp;lt;hr&amp;gt; line below&lt;br&gt;&lt;hr&gt;"/>
+	</frame>
+
+</inishell_config>

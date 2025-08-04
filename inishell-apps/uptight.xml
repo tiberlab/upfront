@@ -1,0 +1,111 @@
+<inishell_config application="UPTIGHT" icon="uptight.png">
+	<include file="workflow_uptight.xml"/>
+    
+    <!-- Physical structure -->
+    <section name="Physical structure" color="sl_blue">
+    <parameter key="database_path" type="path" optional="false" mode="input">
+        <help>Path to the database directory (containing .dat and .etb files)</help>
+    </parameter>
+
+    <parameter key="gen_filename" type="file" optional="false" mode="input">
+        <option extension="Text Files (*.upg *.gen)"/>
+        <help>Path of the .upg or .gen file (without extension)</help>
+    </parameter>
+
+    <parameter key="SOC" type="checkbox" optional="true" default="true">
+        <help>Enable relativistic calculation (spin-orbit coupling)</help>
+    </parameter>
+
+    <parameter key="distance_scaling" type="checkbox" optional="true" default="true">
+        <help>Coupling parameters are scaled with respect to the bond length or not</help>
+    </parameter>
+
+    <parameter key="c_axis" type="text" optional="true" default="0, 0, 1">
+        <help>Crystallographic c-axis direction (x y z) (irrelevant for Tan scheme)</help>
+    </parameter>
+
+    <parameter key="strain_tensor" type="text" optional="true" default="0.0, 0.0, 0.0, 0.0, 0.0, 0.0">
+        <help>Strain tensor (xx, yy, zz, yz, xz, xy)</help>
+    </parameter>
+
+    </section>
+    
+    <!-- Solver -->
+    <section name="Solver" color="sl_green">
+    <parameter key="eigen_solver" type="alternative" optional="true" default="LK">
+        <help>Eigensolver to use (LO=Lanczos, LK=Lapack)</help>
+        <option value="LO"/>
+        <option value="LK"/>
+    </parameter>
+
+    <parameter key="num_valence_bands" type="number" format="integer" optional="true" default="1">
+        <help>Number of valence bands to calculate (not larger than the number of valence electrons if SOC="true"; or not larger than half of that number of SOC="false")</help>
+        <min>0</min>
+    </parameter>
+
+    <parameter key="num_conduction_bands" type="number" format="integer" optional="true" default="1">
+        <help>Number of conduction bands to calculate (not larger than number of AO basis function minus the max number of valence bands)</help>
+        <min>0</min>
+    </parameter>
+
+    <parameter key="valence_guess" type="number" format="decimal" sign="true" unit="eV" optional="false">
+        <help>Initial guess for valence band energy (eV)</help>
+    </parameter>
+
+    <parameter key="conduction_guess" type="number" format="decimal" sign="true" unit="eV" optional="false">
+        <help>Initial guess for conduction band energy (eV)</help>
+    </parameter>
+
+    <parameter key="kpoints_file" type="file" optional="false">
+        <help>File containing k-points in fractional coordinates, each k-point is a 3 numbers on a line, separated by blank spaces</help>
+    </parameter>
+    </section>
+
+    <!-- Output -->
+    <section name="Output" color="sl_yellow">
+    <parameter key="calculate_ao_decomposition" type="checkbox" optional="true" default="false">
+        <help>Calculate atomic orbital decomposition of wavefunctions</help>
+    </parameter>
+
+    <parameter key="num_ao_types" type="alternative" optional="true" default="sp3s*d5">
+        <help>The atomic-like basis set for each chemical element</help>
+        <option value="sp3"/>
+        <option value="sp3s*"/>
+        <option value="sp3s*d5"/>
+    </parameter>
+
+    <parameter key="verbose" type="number" format="integer" optional="true" default="0">
+        <help>Verbosity level (0=minimal, higher=more output)</help>
+        <min>0</min>
+        <max>10</max>
+    </parameter>
+
+    <parameter key="max_iterations" type="number" format="integer" optional="true" default="100000">
+        <help>Maximum number of iterations for iterative solvers</help>
+        <min>1</min>
+    </parameter>
+
+    <parameter key="tolerance" type="number" format="decimal" optional="true" default="1.0e-10">
+        <help>Convergence tolerance</help>
+        <min>1.0e-20</min>
+        <max>1.0</max>
+    </parameter>
+
+    <parameter key="output_path" type="path" optional="true" default="./">
+        <help>Directory for output files</help>
+    </parameter>
+
+    <parameter key="output_gen" type="checkbox" optional="true" default="false">
+        <help>Generate GEN output file</help>
+    </parameter>
+
+    <parameter key="output_eigenstates" type="checkbox" optional="true" default="false">
+        <help>Output eigenstates to file</help>
+    </parameter>
+
+    <parameter key="output_cube" type="checkbox" optional="true" default="false">
+        <help>Output cube files for visualization</help>
+    </parameter>
+    </section>
+
+</inishell_config>

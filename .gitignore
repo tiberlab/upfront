@@ -1,0 +1,28 @@
+#Machine- and user-specific Qt Creator project settings:
+*.pro.user*
+#Qt Creator autosave files:
+*.autosave
+#Qt language files produced from .ts files:
+resources/languages/*.qm
+#qmake and make build files:
+.qmake.stash
+Makefile
+build/
+qrc_inishell.cpp
+*.o
+moc_*
+#tests:
+tests/unit_test_inireader_output.ini
+*/build-*-Debug/
+#user INIshell settings:
+inishell_settings.xml
+#example simulation output files:
+simulations/example_simulation/output/MST96*
+#swap files:
+*.swp
+#ctags file:
+tags
+#profiling:
+callgrind.out.*
+massif.out.*
+

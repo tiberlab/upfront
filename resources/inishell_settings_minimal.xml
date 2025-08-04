@@ -1,0 +1,26 @@
+<!-- Settings file for INIshell
+     Can be deleted at any time, but well be re-created when running INIshell.
+     https://models.slf.ch/p/inishell-ng -->
+
+<inishell_settings>
+ <user>
+  <xmlpaths>
+  </xmlpaths>
+  <inireader>
+   <whitespaces value="USER"/>
+   <warn_unsaved_ini value="TRUE"/>
+  </inireader>
+  <appearance>
+   <remembersizes value="TRUE"/>
+   <language value="en"/>
+   <fontsize value="12"/>
+   <darkmode value="AUTO"/>
+   <fix_toolbar_pos value="TRUE"/>
+  </appearance>
+  <autoload>
+  </autoload>
+  <preview>
+	  <mono_font value="TRUE"/>
+  </preview>
+ </user>
+</inishell_settings>

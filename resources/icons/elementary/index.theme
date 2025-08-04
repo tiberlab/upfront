@@ -1,0 +1,8 @@
+[Icon Theme]
+Name=elementary
+Comment=Elementary Icons
+
+Directories=svg
+
+[svg]
+Type=Scalable

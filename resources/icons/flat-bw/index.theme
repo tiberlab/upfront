@@ -1,0 +1,8 @@
+[Icon Theme]
+Name=flat-bw
+Comment=Breeze BW Icons
+
+Directories=svg
+
+[svg]
+Type=Scalable

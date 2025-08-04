@@ -1,0 +1,79 @@
+<!--
+/*****************************************************************************/
+/*  Copyright 2019 WSL Institute for Snow and Avalanche Research  SLF-DAVOS  */
+/*****************************************************************************/
+/* This file is part of INIshell.
+INIshell is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+INIshell is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with INIshell.  If not, see <http://www.gnu.org/licenses/>.
+*/
+-->
+
+<!--
+This is an INIshell configuration file to display INIshell settings.
+For changes, note that the keys used here are hardcoded in INIshell also.
+-->
+
+<inishell_config>
+
+	<parameter type="label" label="&lt;h3&gt;&lt;i&gt;INIshell&lt;/i&gt; settings&lt;/h3&gt;" color="important">
+		<section name="Settings" color="important"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="settings">
+		<help>Press ESC or the &lt;b&gt;&lt;code&gt;x&lt;/code&gt;&lt;/b&gt; button to close the settings. Use the "Clear INI settings" toolbar button to reset to default values.&lt;br&gt;Don't forget to &lt;b&gt;Click to save settings&lt;/b&gt; when you are done!</help>
+	</parameter>
+	<parameter type="spacer" height="20" section="settings"/>
+	<frame caption="Applications and Simulations paths" section="settings">
+		<parameter type="helptext" wrap="true">
+			<help>Here you can select paths that will be searched for Applications and Simulations (see the respective help file pages). In addition to the paths you set here, &lt;i&gt;INIshell&lt;/i&gt; will decide on a number of standard paths to walk (you can view a list via the command line options).</help>
+			</parameter>
+		<parameter key="user::xmlpaths::path#" label="Add path to search for Applications and Simulations:" type="path" replicate="true" mode="input" help="Enter path to search for Applications and Simulations">
+			<help>After saving the settings you must right-click the Applications or Simulations view and click &quot;Refresh&quot; (or check the "View" menu for the keyboard shortcut).</help>
+			</parameter>
+		</frame>
+	<frame caption="Appearance" section="settings">
+		<parameter key="user::appearance::language" label="Program language:" type="Alternative" help="Select INIshell's language">
+			<o value="en" caption="English" default="true" help="Englisch"/>
+			<o value="de" caption="Deutsch" help="German"/>
+			<help>Note that this only concerns the static part of INIshell and the applications' descriptions are up to the software's vendor to translate.</help>
+		</parameter>
+		<parameter key="user::appearance::remembersizes" caption="Remember window sizes" type="checkbox" default="TRUE" help="Restore windows sizes">
+			<help>Restore window sizes when they are re-opened.</help>
+		</parameter>
+		<parameter key="user::appearance::fontsize" label="Font size:" type="number" format="integer" min="1" unit="pt" default="12" notoggle="true" help="Default INIshell font size">
+			<help>Font size for the main INIshell text elements. Takes effect on next program restart.</help>
+		</parameter>
+		<parameter key="user::preview::mono_font" type="checkbox" caption="Set monospaced font in the Preview window" default="TRUE">
+			<help>This is useful to keep the formatting of space-indented INI files.</help>
+		</parameter>
+		<parameter key="user::appearance::darkmode" label="Dark theme:" type="Alternative">
+			<o value="AUTO" caption="Apply OS setting" default="true"/>
+			<o value="ON" caption="Always apply dark theme"/>
+			<o value="OFF" caption="Don't apply dark theme"/>
+			<help>Choose how to decide if a dark theme should be enabled for &lt;i&gt;INIshell&lt;/i&gt;. A program restart is required for this to take effect.</help>
+		</parameter>
+	</frame>
+	<frame caption="Warning messages" section="settings">
+		<parameter key="user::inireader::warn_unsaved_ini" caption="Warn on unsaved INI changes" type="checkbox" default="TRUE">
+			<help>When closing an opened INI file, ask what to do with unsaved changes? If set to &lt;code&gt;false&lt;/code&gt;, unsaved changes will be discarded. This also sets the behavior for unsaved changes in the preview window.</help>
+		</parameter>
+	</frame>
+	<frame caption="Whitespace handling" section="settings">
+		<parameter key="user::inireader::whitespaces" label="Whitespace handling:" type="Alternative" help="Select INI whitespace handling mode">
+			<o value="USER" caption="Leave whitespaces in INI as they are" default="true"/>
+			<o value="SINGLE" caption="Use single space in INI files"/>
+			<help>Use single spaces for writing out INI keys or remember whitespaces from the input INI? Takes effect when the next INI file is read.</help>
+		</parameter>
+	</frame>
+	<parameter type="spacer" height="20" section="settings"/>
+
+</inishell_config>

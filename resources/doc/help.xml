@@ -1,0 +1,622 @@
+<!--
+/*****************************************************************************/
+/*  Copyright 2019 WSL Institute for Snow and Avalanche Research  SLF-DAVOS  */
+/*****************************************************************************/
+/* This file is part of INIshell.
+   INIshell is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   INIshell is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with INIshell.  If not, see <http://www.gnu.org/licenses/>.
+*/
+-->
+
+<!--
+This is INIshell's user guide.
+-->
+
+<inishell_config application="Help" icon="help.png">
+
+	<!-- INTRODUCTION -->
+
+	<parameter type="label" label="&lt;h3&gt;Introduction to INIshell&lt;/h3&gt;" color="sl_violet">
+		<section name="Introduction" color="sl_violet"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="Introduction">
+		<help>&lt;i&gt;INIshell&lt;/i&gt; is a Graphical User Interface for various models. The GUI is dynamically generated from a semantic description contained in XML files.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Purpose of INIshell">
+		<section name="Introduction"/>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;b&gt;&lt;i&gt;INIshell&lt;/i&gt;&lt;/b&gt; is a graphical user interface (GUI) to &lt;b&gt;read, manipulate, and save INI files&lt;/b&gt;. It aims to facilitate controlling text-based software settings by annotating them, listing possible options, and generally offering a workflow.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Furthermore, &lt;i&gt;INIshell&lt;/i&gt; can be used as a &lt;b&gt;collection of simulations&lt;/b&gt; across different simulation software, where external programs such as data converters can be incorporated into the &lt;b&gt;workflow&lt;/b&gt;.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>For developers, &lt;i&gt;INIshell&lt;/i&gt; offers the possibility to be used &lt;b&gt;for your own software&lt;/b&gt;. The GUI is built dynamically, where each parameter that can be set is read at runtime from a comprehensive list of INI keys, together with their types and options.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Read more about all of this in the respective tabs. The help for developers can be reached in the menu separately and describes the part of &lt;i&gt;INIshell&lt;/i&gt; that is mainly of interest for developers.</help>
+		</parameter>
+	</frame>
+	<frame caption="Quick guide">
+		<section name="Introduction"/>
+		<parameter type="helptext" wrap="true">
+			<help>Choose the application which is being controlled by INI files in the &lt;font color=&quot;#268bd2&quot;&gt;Applications&lt;/font&gt; tab by double-clicking on it. If you have one already, load your INI file in the &lt;font color=&quot;#268bd2&quot;&gt;INI files&lt;/font&gt; tab. Parameters that are mandatory to set are highlighted, as are settings which are currently at their default value. In the latter case, the value is not transported to the INI file, because the controlled program will default it anway.</help>
+		</parameter>
+		<parameter key="MANDATORY" type="text" size="large" optional="false">
+            <help>A parameter that is non-optional. If you leave this blank and try to save you will be reminded of this (you can try this right now).</help>
+        </parameter>
+		<parameter key="DEFAULT" type="text" size="large" default="this is a default text">
+            <help>This is what a panel looks like that is in its default state.</help>
+        </parameter>
+        <parameter type="helptext" wrap="true">
+			<help>When you are done with the configuration, save the INI file and run your simulation software. If configured, this can be done in the workflow panel.</help>
+		</parameter>
+	</frame>
+	<frame caption="Quick overview of the user interface">
+		<section name="Introduction"/>
+		<parameter type="helptext" wrap="true">
+			<help>The left side of &lt;i&gt;INIshell&lt;/i&gt; guides through a simulation workflow. Each panel may display content in the main area. For example, an &lt;font color=&quot;#268bd2&quot;&gt;Application&lt;/font&gt; will display the parameters that can be configured via &lt;i&gt;INIshell&lt;/i&gt;. A &lt;font color=&quot;#268bd2&quot;&gt;Simulation&lt;/font&gt; may show a terminal view in the main area in which simulation software is started. The &lt;font color=&quot;#268bd2&quot;&gt;INI files&lt;/font&gt; panel lets you choose an INI file to edit from your computer.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Through the menu and the toolbar on the top you can perform some quick actions like saving and previewing an INI file, accessing the settings and log, or clearing the GUI:&lt;ul&gt;
+			&lt;li&gt;The &lt;font color=&quot;#268bd2&quot;&gt;Preview&lt;/font&gt; button lets you view your settings in text form. Keys that are known to the currently loaded application are colored differently to unknown ones, same for sections. Invalid lines will be highlighted also.&lt;/li&gt;
+			&lt;li&gt;From the &lt;font color=&quot;#268bd2&quot;&gt;Logger&lt;/font&gt; you can gather information if something goes wrong.&lt;/li&gt;
+			&lt;li&gt;With &lt;font color=&quot;#268bd2&quot;&gt;Reset GUI&lt;/font&gt; you can clear both the loaded application and INI file, while &lt;font color=&quot;#268bd2&quot;&gt;Clear GUI&lt;/font&gt; will reset only the INI values.&lt;/li&gt;
+			&lt;/ul&gt;</help>
+		</parameter>
+	</frame>
+	<frame caption="Naming conventions">
+		<section name="Introduction"/>
+		<parameter type="helptext" wrap="true">
+            <help>Throughout &lt;i&gt;INIshell&lt;/i&gt;'s description, the term &lt;i&gt;user&lt;/i&gt; refers to a person who is using &lt;i&gt;INIshell&lt;/i&gt; to configure some software's settings through INI files. A &lt;i&gt;developer&lt;/i&gt; is a person who wishes to use &lt;i&gt;INIshell&lt;/i&gt; to to control their own custom software.</help>
+        </parameter>
+        <parameter type="helptext" wrap="true">
+            <help>The &lt;i&gt;workflow panel&lt;/i&gt; is the left side of &lt;i&gt;INIshell&lt;/i&gt; which leads through the different steps from configuring an application to running it an visualizing the output. The &lt;i&gt;main panel&lt;/i&gt; is the right side of &lt;i&gt;INIshell&lt;/i&gt; showing the application's INI settings or output (this help is being displayed in the main panel).</help>
+		</parameter>
+	</frame>
+
+	<!-- FIRST STEPS -->
+
+	<parameter type="label" label="&lt;h3&gt;First steps&lt;/h3&gt;" color="sl_violet">
+		<section name="First steps" color="sl_violet"/>
+	</parameter>
+	<frame caption="Loading applications">
+		<section name="First steps"/>
+		<parameter type="helptext" wrap="true">
+			<help>An &lt;b&gt;application&lt;/b&gt; in this scope is software that can be configured via INI keys, for example SLF's &lt;i&gt;&lt;a href=&quot;https://models.slf.ch/p/meteoio/&quot;&gt;MeteoIO&lt;/a&gt;&lt;/i&gt;, &lt;i&gt;&lt;a href=&quot;https://models.slf.ch/p/snowpack/&quot;&gt;SNOWPACK&lt;/a&gt;&lt;/i&gt; and &lt;i&gt;&lt;a href=&quot;https://models.slf.ch/p/alpine3d&quot;&gt;Alpine3D&lt;/a&gt;&lt;/i&gt;. You should see a list of applications for which configuration files have been shipped with &lt;i&gt;INIshell&lt;/i&gt; in the &lt;font color=&quot;#268bd2&quot;&gt;Applications&lt;/font&gt; tab of the workflow panel. If not, see the &lt;font color=&quot;#dc322f&quot;&gt;Troubleshooting&lt;/font&gt; part of this help.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Once you have loaded the application by double-clicking it, all its INI settings will be displayed in the main panel. You can now start configuring the application / simulation in the main panel.</help>
+		</parameter>
+		<parameter key="HEIGHT_OF_METEO_VALUE" type="number" default="2.0" precision="1" unit="m" min="0" max="10" notoggle="true">
+			<help>Example panel to configure a parameter, in this case the height above ground at which some sensor measures data.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>By interacting with &lt;i&gt;INIshell&lt;/i&gt;'s interface to configure the parameter above, you are actually modifying the INI file by setting for example&lt;br&gt; &lt;code&gt;HEIGHT_OF_METEO_VALUE = 5.0&lt;/code&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>When you are finished, save the INI file (for example by using the menu) and continue in the workflow. The INI file is ready for your simulation software. If you go ahead right now and change the value above to &lt;code&gt;5.0 and then click &lt;/code&gt;click &lt;font color=&quot;#268bd2&quot;&gt;View - Preview&lt;/font&gt; in the menu or the &lt;font color=&quot;#268bd2&quot;&gt;Preview&lt;/font&gt; button in the toolbar you will see what the example settings in this help document look like in INI form. This is what will be read as simulation parameters by the application.</help>
+		</parameter>
+	</frame>
+	<frame caption="Using existing INI files">
+		<section name="First steps" color="#065e0f"/>
+		<parameter type="helptext" wrap="true">
+			<help>The next tab in the workflow is &lt;font color=&quot;#268bd2&quot;&gt;INI files&lt;/font&gt; which lets you browse your computer for existing INI files. Locate a folder with existing files and double-click on it. If you don't have any, try modifying some panels in this help document and save them as INI file. Or better yet, load an application and start changing panels there. Note that to be able to do this, an application must always be loaded first.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Once a list of INI files is displayed in the file browser you can double-click a file to load it, modify it, and write it back out.</help>
+		</parameter>
+	</frame>
+	<frame caption="Running simulations">
+		<section name="First steps"/>
+		<frame caption="Note" color="info" background_color="sl_base2">
+			<parameter type="helptext" wrap="true">
+				<help>Never run simulations from a vendor you don't trust!</help>
+			</parameter>
+		</frame>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;br&gt;We call a configuration a &lt;b&gt;simulation&lt;/b&gt; when an application has an INI file loaded and is therefore ready to run an experiment. You should see an example simulation in the &lt;font color=&quot;#268bd2&quot;&gt;Simulations&lt;/font&gt; tab of the workflow panel called &quot;Weißfluhjoch&quot;. The workflow panel guides through the steps of configuring and running a simulation.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Usually the first step will be to use the &lt;font color=&quot;#268bd2&quot;&gt;Applications&lt;/font&gt; tab to configure some software's INI file as we did above:</help>
+		</parameter>
+		<parameter key="METEOPATH" type="path" mode="input">
+			<help>Example of how it could look to set a path that your application needs.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>If you already have your toolchain set up this may be all there is to do and you can start your simulation with the new INI file. However, &lt;i&gt;INIshell&lt;/i&gt; can be configured to provide a workflow that is specific to an application. Hence, the workflow panel may change depending on which application you have loaded.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>To follow an example workflow, click the &lt;font color=&quot;#cb4b16&quot;&gt;Example workflow&lt;/font&gt; tab of this help. To set up your own simulations, see the &lt;font color=&quot;#cb4b16&quot;&gt;Configuring simulations&lt;/font&gt; tab of this help.&lt;br&gt;</help>
+		</parameter>
+		<frame caption="Note" color="info" background_color="sl_base2">
+			<parameter type="helptext" wrap="true">
+				<help>The first three workflow tabs are always available and colored in black (Applications, Simulations, INI files), optional additional ones are colored in purple - they are created dynamically by a specific application or simulation.</help>
+			</parameter>
+		</frame>
+	</frame>
+
+	<!-- INPUT PANELS 1 -->
+
+	<parametergroup name="METEOPARAMETERS">
+		<option value="TA"/>
+		<option value="RH"/>
+		<option value="P"/>
+	</parametergroup>
+	<parametergroup name="METEOPARAMETERS_SOLAR">
+		<option value="ISWR"/>
+		<option value="ILWR"/>
+		<option value="IRSW"/>
+		<option value="IRLW"/>
+	</parametergroup>
+	<section name="Input panels 1" color="sl_cyan">
+		<parameter type="label" label="&lt;h3&gt;Input panels&lt;/h3&gt;" color="sl_cyan"/>
+		<parameter type="helptext" wrap="true">
+			<help>This is a list of the panels &lt;i&gt;INIshell&lt;/i&gt; supports. You can play around with the settings and use the &lt;font color=&quot;#268bd2&quot;&gt;Preview&lt;/font&gt; window to see what they do.&lt;br&gt;</help>
+		</parameter>
+		<frame caption="Text input">
+			<parameter key="COORDSYS" type="text" help="e. g. CH1903">
+				<help>Example panel for text input. Enter your coordinate system, for example &quot;CH1903&quot;.</help>
+			</parameter>
+			<parameter key="STATION1" type="text" size="medium" default="MST96.smet" optional="false" help="A station's name">
+				<help>A text panel that has a default value set, and must be supplied. If empty, it will highlighted until it is filled out. You will get warnings when trying to save an INI file with mandatory parameters missing.</help>
+			</parameter>
+			<parameter key="POSITION1" type="text" size="large" default="latlon(46.81206, 9.84721)" help="A station's position" >
+				<help>Coordinates display a little globe which will lead to a map collection.</help>
+			</parameter>
+		</frame>
+		<frame caption="Number input">
+			<parameter key="BUFF_CHUNK_SIZE" type="number" format="integer+" default="365" help="Data buffer size">
+				<help>Integer value for MeteoIO's data buffering routines. Set to your simulation length.</help>
+			</parameter>
+			<parameter key="BUFF_BEFORE" type="number" format="decimal" precision="1" default="1.5" help="Data buffer size" >
+				<help>A decimal value. Set around your filter routines' time spans.</help>
+			</parameter>
+			<parameter key="WINDOW_SIZE" type="number" default="${{60*60*24}}" help="Filter window size">
+ 				<help>Numbers can be entered as expressions when clicking the little formula icon to the side of it. See MeteoIO's online help for the syntax. It also supports system variables, and references to INI keys.</help>
+			</parameter>
+		</frame>
+		<frame caption="File and path input">
+			<parameter key="METEOPATH" type="path" mode="output" help="Output path to meteo data">
+				<help>Choose an output path from the file system. If the folder is not writeable, or you choose a file, or something else is wrong, a warning label is displayed, but the INI file will be written out normally.</help>
+			</parameter>
+			<parameter key="IMPORT_BEFORE" type="file" mode="input" default="non_existent_file.ini" help="Import file" >
+				<help>Choose an input file from the file system. If an unfit file (a program, a folder, etc) is selected a little warning will be displayed.</help>
+			</parameter>
+		</frame>
+		<frame caption="Datetime input">
+			<parameter key="DATE_TIME" type="datetime">
+				<help>Enter/select a date and/or time.</help>
+			</parameter>
+		</frame>
+		<frame caption="Checkbox">
+			<parameter key="RESAMPLING" label="" caption="Path resampling enabled" type="checkbox">
+				<help>Set a true/false value with a check box.</help>
+			</parameter>
+		</frame>
+	</section>
+
+	<!-- INPUT PANELS 2 -->
+
+	<section name="Input panels 2" color="sl_cyan">
+		<parameter type="label" label="&lt;h3&gt;Input panels&lt;/h3&gt;" color="sl_cyan"/>
+		<frame caption="Alternatives">
+			<parameter key="SW_MODE" type="alternative">
+				<option value="INCOMING"/>
+				<option value="REFLECTED"/>
+				<option value="BOTH"/>
+				<help>Pick the mode for incoming short wave radiation.</help>
+			</parameter>
+			<parameter key="%::COPY" type="alternative" editable="true" optional="false">
+				<reference name="METEOPARAMETERS"/>
+				<help>Pick a parameter to copy from the ist or supply one in the text field. It is set mandatory to do so.</help>
+			</parameter>
+		</frame>
+		<frame caption="Parameter Selectors">
+			<parameter label="Resample parameter:" type="selector">
+				<parameter key="%::RESAMPLE" type="alternative" template="true">
+					<option value="Solar"/>
+					<option value="DAILY_SOLAR" caption="Solar daily sum"/>
+				</parameter>
+				<reference name="METEOPARAMETERS_SOLAR"/>
+				<help>To add a resampling strategy for a meteo parameter of your choice choose the parameter from the dropdown menu or give your own, then click the "+" sign. You can now choose an algorithm for this parameter. Repeat for as many parameters as you like. To remove one, make sure the parameter is entered in the dropdown field and click the "-" button.</help>
+			</parameter>
+		</frame>
+		<frame caption="Parameter Replicators">
+			<parameter key="STATION#" type="text" replicate="true" optional="false">
+				<help>Supply as many input stations as you like, but at least one (mandatory parameter). Click "+" to add, and "-" to remove a station.</help>
+			</parameter>
+		</frame>
+		<frame caption="Multiple choice">
+			<parameter key="GENERATORS" type="choice" label="Data generators:">
+				<o value="STD_PRESS"><help>Choose from a list of options.</help></o>
+				<option value="CST">
+					<parameter key="@::CST::VALUE" type="number"/>
+					<help>For each of them, more configuration panels may be shown.</help>
+				</option>
+				<option value="SIN">
+					<parameter type="horizontal">
+						<option>
+							<parameter key="@::SIN::TYPE" type="alternative" optional="false">
+								<option value="yearly" help="Yearly period"/>
+								<option value="daily" help="Daily period" default="true"/>
+							</parameter>
+						</option>
+						<o><parameter key="@::SIN::MAX" type="number"/></o>
+						<o><parameter key="@::SIN::PHASE" type="number"/></o>
+					</parameter>
+					<help>Sinusoidal generator.</help>
+				</option>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>Note that if you hover the mouse over the list you can view in which order the items have been selected.</help>
+			</parameter>
+		</frame>
+		<frame caption="Checklist">
+			<parameter key="METADATA" label="Metadata extraction" type="checklist" label="Metadata lookup:">
+				<o value="METADATA_OFFSET"><help>Add an offset read from metadata.</help></o>
+				<option value="FIXED_OFFSET">
+					<parameter key="OFFSET" type="number"/>
+					<help>Add a fixed offset.</help>
+				</option>
+				<o value="CONVERT_SI"><help>Convert to SI units</help></o>
+				<o value="META_UNITS"><help>Use units found in metadata</help></o>
+				<o value="NEIGHBORING_META"><help>Get metadata from neighboring stations if available</help></o>
+				<o value="CONVERT_TO_SEALEVEL"><help>Use the station's altitude data to convert the pressure to sea level</help></o>
+				<help>If available, choosing an option from below will display the item's help here.</help>
+			</parameter>
+			<parameter type="helptext" wrap="true">
+				<help>Note that if you hover the mouse over the list you can view in which order the items have been selected.</help>
+			</parameter>
+		</frame>
+	</section>
+
+	<!-- UI OF INISHELL -->
+
+	<parameter type="label" label="&lt;h3&gt;Components of &lt;i&gt;INIshell&lt;/i&gt;&lt;/h3&gt;" color="sl_green">
+		<section name="UI of INIshell" color="sl_green"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="UI of INIshell">
+		<help>The main panel and the workflow panel are the main components of &lt;i&gt;INIshell&lt;/i&gt; and they are separated by a vertical bar. Apart from those, there are a few other components which aid the creation of configuration files.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Preview editor" key="help-preview">
+		<section name="UI of INIshell"/>
+		<parameter type="helptext" wrap="true">
+			<help>The current state of your settings can always be checked in the &lt;font color=&quot;#268bd2&quot;&gt;Preview window&lt;/font&gt;, which shows what the file would look like when written out. The INI file is syntax highlighted. A short one may look like this:&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&lt;b&gt;&lt;font color=&quot;#073642&quot;&gt;[GENERAL]&lt;/font&gt;&lt;/b&gt;&lt;br&gt;
+				&lt;font color=&quot;#268bd2&quot;&gt;BUFF_CHUNK_SIZE&lt;/font&gt; = &lt;font color=&quot;#859900&quot;&gt;365&lt;/font&gt;&lt;font color=&quot;#93a1a1&quot;&gt; #a known key&lt;/font&gt;&lt;br&gt;
+				&lt;font color=&quot;#268bd2&quot;&gt;BUFF_BEFORE&lt;/font&gt; = &lt;font color=&quot;#859900&quot;&gt;1.5&lt;/font&gt;&lt;br&gt;
+				&lt;font color=&quot;#b58900&quot;&gt;BUFF_AFTER&lt;/font&gt; = &lt;font color=&quot;#859900&quot;&gt;2&lt;/font&gt;&lt;font color=&quot;#93a1a1&quot;&gt; #unknown key&lt;/font&gt;&lt;br&gt;&lt;br&gt;
+				&lt;b&gt;&lt;font color=&quot;#cb4b16&quot;&gt;[UNKNOWN_SECTION]&lt;/font&gt;&lt;/b&gt;&lt;br&gt;
+				&lt;font color=&quot;#dc322f&quot;&gt;invalid line&lt;/font&gt;&lt;/code&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;br&gt;You can see that sections and keys that are not known to the currently loaded application are colored differently, as well as lines that can not be a valid INI setting.</help>
+		</parameter>
+	</frame>
+	<frame caption="Logger">
+		<section name="UI of INIshell"/>
+		<parameter type="helptext" wrap="true">
+			<help>The &lt;font color=&quot;#268bd2&quot;&gt;Logger&lt;/font&gt; can be accessed via the menu or by clicking a status message on the bottom of the window. It gathers errors and warnings that were encountering during the workflow. You should always check the log if something is going wrong.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Warnings often concern the INI file parsing. For example, they can indicate that an INI value was read that the application does not know, or that has an invalid format. Your INI file may still be correct, but chances are you should have a look at it. It may for example hint to a deprecated setting. Warning labels that appear in a workflow tab point to an error in the workflow, for example if a simulation is controlled via a text field that does not exist. If you are running your own simulations through &lt;i&gt;INIshell&lt;/i&gt; you should check that everything is in order here. Errors prefaced with "XML error" are errors in the configuration files of the applications. Either such a file can not be read (check your permissions), or the description of the software or workflow panel itself is faulty.</help>
+			<parameter type="helptext" wrap="true">
+				<help>You can save the log as plain text or HTML.</help>
+			</parameter>
+		</parameter>
+	</frame>
+	<frame caption="Autoloading INI files">
+		<section name="UI of INIshell"/>
+		<parameter type="helptext" wrap="true">
+			<help>If you have an application loaded and then open an INI file in it, the name of the current INI file will be displayed at the top part of the window. Next to it a checkbox will appear that says "autoload this INI file for your_application". If you click this, the next time you load your application or simulation the current INI file will automatically be opened.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>This is particularly useful for simulations as they will almost always have their specific INI file associated with them.</help>
+		</parameter>
+	</frame>
+	<frame caption="Command line options">
+		<section name="UI of INIshell"/>
+		<parameter type="helptext" wrap="true">
+			<help>To see which options are available through &lt;i&gt;INIshell&lt;/i&gt;'s command line interface start it with:&lt;br&gt;&lt;code&gt;./inishell --help&lt;/code&gt;.</help>
+			<parameter type="helptext" wrap="true">
+				<help>Example to modify/create/delete a single INI key:&lt;br&gt;&lt;code&gt;./inishell -i /home/snow/inishell/io.ini -o /home/snow/inishell/out.ini SECTION::KEY=value --exit&lt;/code&gt;</help>
+			</parameter>
+		</parameter>
+	</frame>
+	<frame caption="Tipps" color="info" background_color="sl_base2">
+		<section name="UI of INIshell"/>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;ul&gt;
+				&lt;li&gt;The toolbar can be dragged around to any side of the window (if enabled via a right-click on the toolbar).&lt;/li&gt;
+				&lt;li&gt;The separator between the workflow and main panel can be dragged and will remember its position. You can drag it all the way to hide the workflow panel (also possible through the menu).&lt;/li&gt;
+				&lt;li&gt;You can open the help file quickly by using the keyboard shortcut you are used to on your system. Many actions can be performed this way; check the menu for their shortcuts.&lt;/li&gt;
+				&lt;li&gt;Right-clicking on the applications, simulations, and on the INI file listing will open a context menu with further options.&lt;/li&gt;
+				&lt;li&gt;Right-clicking on a panel (outside of text areas) will show a context menu to reset or delete the key.&lt;/li&gt;
+				&lt;/ul&gt;</help>
+		</parameter>
+	</frame>
+
+	<!-- TERMINAL VIEW -->
+
+	<parameter type="label" label="&lt;h3&gt;Terminal view&lt;/h3&gt;" color="sl_green">
+		<section name="Terminal view" color="sl_green"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="Terminal View">
+		<help>Workflow panels will show text based output in the main panel if at least one of their buttons performs a command on your computer. The output of this external program is shown in the terminal view. Messages in there come directly from the external program that is started by &lt;i&gt;INIshell&lt;/i&gt;, resp. directly from the system command.</help>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="Terminal View">
+		<help>The shipped &lt;font color=&quot;#268bd2&quot;&gt;Weißfluhjoch&lt;/font&gt; example utilizes &lt;i&gt;SNOWPACK&lt;/i&gt; as external program that runs the simulation. A successful run will look something like this:&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Successful SNOWPACK run output" section="Terminal view" color="sl_green">
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&lt;font color=&quot;#a0a0a4&quot;&gt;&lt;b&gt;$ /home/snow/inishell&lt;/b&gt;&lt;/font&gt;&lt;br&gt;
+				&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;$ snowpack -c simulations/example_simulation/io_res5exp.ini -e 1996-01-17T00:00:00&lt;/b&gt;&lt;br&gt;
+				[i] [2019-12-03T09:40:44] ---> Start SNOWPACK in RESEARCH mode &lt;br&gt;
+				[i] [] snowpack compiled on Nov 25 2019 at 17:21:18 &lt;br&gt;
+				[i] [] Experiment : res4 &lt;br&gt;
+				[i] [] Output dir : simulations/example_simulation/output &lt;br&gt;
+				&lt;br&gt;
+				[i] [] Run on meteo station MST96 &lt;br&gt;
+				[i] [] Reading snow cover data for station MST96 &lt;br&gt;
+				[i] [] No virtual slopes! Computation for main station MST96 only! &lt;br&gt;
+				[i] [] Finished initializing station MST96 &lt;br&gt;
+				[i] [] Erased 1 *.haz file(s) &lt;br&gt;
+				[i] [] Erased 1 *.sno file(s) &lt;br&gt;
+				[i] [] Data in *.pro file(s) may be overwritten &lt;br&gt;
+				[i] [] Data in *.smet file(s) may be overwritten &lt;br&gt;
+				[i] [] Erased simulations/example_simulation/output/MST96_res4.ini &lt;br&gt;
+				[i] [2019-12-03T09:40:45] ---> Start simulation for MST96 on 1995-11-01T00:15:00+01:00 &lt;br&gt;
+				[i] [] End date specified by user: 1996-01-17T00:00:00+01:00 &lt;br&gt;
+				[i] [] Integration step length: 15.000000 min &lt;br&gt;
+				[i] [1995-11-16T00:00:00] ---> Station MST96 (1 slope(s)): advanced to 16.11.1995 00:00:00 station time &lt;br&gt;
+				[i] [1995-12-01T00:00:00] ---> Station MST96 (1 slope(s)): advanced to 01.12.1995 00:00:00 station time &lt;br&gt;
+				[i] [1995-12-16T00:00:00] ---> Station MST96 (1 slope(s)): advanced to 16.12.1995 00:00:00 station time &lt;br&gt;
+				[i] [1995-12-31T00:00:00] ---> Station MST96 (1 slope(s)): advanced to 31.12.1995 00:00:00 station time &lt;br&gt;
+				[i] [1996-01-15T00:00:00] ---> Station MST96 (1 slope(s)): advanced to 15.01.1996 00:00:00 station time &lt;br&gt;
+				[i] [2019-12-03T09:40:47] ---> Writing data to sno file(s) for Weissfluhjoch:StudyPlot_MST (station MST96) on 1996-01-17T00:00:00 &lt;br&gt;
+				[i] [] Total time to read meteo data : 0.423775 s &lt;br&gt;
+				[i] [] Runtime for station MST96: 2.202994 s &lt;br&gt;
+				&lt;br&gt;
+				[i] [] STARTED running SLF RESEARCH Snowpack Model on Tue Dec 3 09:40:44 2019 &lt;br&gt;
+				======================================================================== &lt;br&gt;
+				FINISHED running SLF RESEARCH Snowpack Model on Tue Dec 3 09:40:47 2019 &lt;br&gt;
+				&lt;br&gt;&lt;/font&gt;&lt;br&gt;
+				&lt;font color=&quot;#a0a0a4&quot;&gt;&lt;b&gt;$ /home/snow/inishell&lt;/b&gt;&lt;/font&gt;&lt;/code&gt;</help>
+		</parameter>
+	</frame>
+	<parameter type="helptext" wrap="true" section="Terminal view">
+		<help>&lt;br&gt;On the other hand, a failed &lt;i&gt;SNOWPACK&lt;/i&gt; run could look like this:&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Failed SNOWPACK run output" section="Terminal view" color="error">
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&lt;font color=&quot;#a0a0a4&quot;&gt;&lt;b&gt;$ /home/snow/inishell&lt;/b&gt;&lt;/font&gt;&lt;br&gt;
+				&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;$ snowpack -c simulations/example_simulation/io_res5exp.ini -e %end_date_wjf&lt;/b&gt;&lt;br&gt;
+				[i] [2019-12-03T10:06:50] ---> Start SNOWPACK in RESEARCH mode &lt;br&gt;
+				[i] [] snowpack compiled on Nov 25 2019 at 17:21:18 &lt;br&gt;
+				[i] [] Experiment : res4 &lt;br&gt;
+				[i] [] Output dir : simulations/example_simulation/output &lt;br&gt;
+				&lt;br&gt;
+				[i] [] Run on meteo station MST96 &lt;br&gt;
+				[i] [] Reading snow cover data for station MST96 &lt;br&gt;
+				[i] [] No virtual slopes! Computation for main station MST96 only! &lt;br&gt;
+				[i] [] Finished initializing station MST96 &lt;br&gt;&lt;/font&gt;
+				&lt;br&gt;
+				&lt;font color=&quot;#c0c0c0&quot;&gt;**** backtrace ****&lt;br&gt;
+				(1) in mio::UnknownValueException::UnknownValueException(std::__cxx11::basic_string, std::allocator > const&amp;, std::__cxx11::basic_string, std::allocator > const&amp;) from /usr/local/lib/libmeteoio.so.2&lt;br&gt;
+				(2) in mio::Date::operator>(mio::Date const&amp;) const from /usr/local/lib/libmeteoio.so.2&lt;br&gt;
+				(3) in from snowpack&lt;br&gt;
+				&lt;br&gt;
+				[Date.cc:980]&lt;/font&gt; &lt;font color=&quot;red&quot;&gt;UnknownValue: Date object is undefined!&lt;/font&gt;&lt;br&gt;
+				&lt;br&gt;
+				&lt;br&gt;
+				&lt;br&gt;
+				&lt;b&gt;&lt;font color=&quot;#800000&quot;&gt;The process was terminated unexpectedly (exit code: 6, exit status: 1).&lt;/font&gt;&lt;/b&gt;&lt;br&gt;
+				&lt;font color=&quot;#a0a0a4&quot;&gt;&lt;b&gt;$ /home/snow/inishell&lt;/b&gt;&lt;/font&gt;&lt;/code&gt;</help>
+		</parameter>
+	</frame>
+	<parameter type="helptext" wrap="true" section="Terminal view">
+		<help>&lt;br&gt;In the above example, we can see from the second line (which is the system command &lt;i&gt;INIshell&lt;/i&gt; executes, bold and black) that &lt;code&gt;%end_date_wjf&lt;/code&gt; is what's different. An element's ID is not found (because there is a typo and it should be &lt;code&gt;_wfj&lt;/code&gt; instead of &lt;code&gt;_wjf&lt;/code&gt;). In this case this means that your workflow XML is flawed, and &lt;i&gt;SNOWPACK&lt;/i&gt; is therefore started with faulty values. A different error message might be that your INI file is not found, which should be an easy fix. And then there could be errors coming from the simulation itself.</help>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="Terminal view">
+		<help>The first and last lines (bold light gray) show that the terminal is ready and the current directory &lt;i&gt;INIshell&lt;/i&gt; is running in. If you get errors, first check if your paths match.</help>
+	</parameter>
+
+	<!-- EXAMPLE WORKFLOW -->
+
+	<parameter type="label" label="&lt;h3&gt;Walkthrough of the example simulation&lt;/h3&gt;" color="sl_orange">
+		<section name="Example Workflow" color="sl_orange"/>
+	</parameter>
+	<parameter type="helptext" wrap="true">
+		<section name="Example Workflow"/>
+		<help>This is a walkthrough of the different steps of the provided example simulation. If you don't see the experiment &quot;Weißfluhjoch&quot; in the &lt;font color=&quot;#268bd2&quot;&gt;Simulations&lt;/font&gt; workflow tab, please check the &lt;font color=&quot;#dc322f&quot;&gt;Troubleshooting&lt;/font&gt; part of this help.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Working directory" key="help-workingdir">
+		<section name="Example Workflow"/>
+		<parameter type="helptext" wrap="true">
+			<help>At the bottom of workflows you will often find a dropdown menu to select the "working directory". In order for your computer to find the necessary programs and files, the &lt;a href=&quot;https://en.wikipedia.org/wiki/Working_directory&quot;&gt;working directory&lt;/a&gt; must be set accordingly. This is different on different systems, but usually one of the options provided should work. Only change this to a custom path if you know this is necessary.</help>
+		</parameter>
+	</frame>
+	<frame caption="Step 1: Open the simulation">
+		<section name="Example Workflow"/>
+		<parameter type="helptext" wrap="true">
+			<help>Double click the Weißfluhjoch simulation in the &lt;font color=&quot;#268bd2&quot;&gt;Simulations&lt;/font&gt; workflow tab. This loads an interface to change INI parameters for &lt;i&gt;SNOWPACK&lt;/i&gt; in the main panel. Also, a new workflow tab appears for this application which is simply called &lt;font color=&quot;#268bd2&quot;&gt;SNOWPACK&lt;/font&gt;, and another one shows up for our simulation called &lt;font color=&quot;#268bd2&quot;&gt;Weißfluhjoch&lt;/font&gt;.</help>
+		</parameter>
+	</frame>
+	<frame caption="Step 2: Make INI value changes">
+		<section name="Example Workflow"/>
+		<parameter type="helptext" wrap="true">
+			<help>The simulation's INI file should automatically load. To use different INI files, use the &lt;font color=&quot;#268bd2&quot;&gt;INI files&lt;/font&gt; workflow tab to look for your file (in the preconfigured case it is located at &lt;code&gt;path_inishell_is_in/simulations/example_simulation/io_res5exp.ini&lt;/code&gt;) and double-click it to open (you can reach this path quickly by pressing the &quot;Working directory&quot; button in the navigation toolbar above). Now this INI file's contents are displayed in the main panel and you can experiment with them and make some changes. If you would like, you can first press the &lt;font color=&quot;#268bd2&quot;&gt;Preview&lt;/font&gt; button (or use the menu) to have the original INI file in a preview window. Every time you click, the current state will stay available for the rest of your session.</help>
+		</parameter>
+	</frame>
+	<frame caption="Step 3: Save the INI file">
+		<section name="Example Workflow"/>
+		<parameter type="helptext" wrap="true">
+			<help>Once you are happy with your changes, save the INI file to the same name.</help>
+		</parameter>
+	</frame>
+	<frame caption="Step 4: Run the simulation">
+		<section name="Example Workflow"/>
+		<parameter type="helptext" wrap="true">
+			<help>Navigate to the &lt;font color=&quot;#268bd2&quot;&gt;Weißfluhjoch&lt;/font&gt; workflow tab and click the button titled &quot;Run experiment&quot;. You will see in the terminal view that is now being displayed in the main panel that a command was started that runs &lt;i&gt;SNOWPACK&lt;/i&gt;. It references the INI file that's used by a fixed file path, and you can change the end date of the simulation. If all goes well, &lt;i&gt;SNOWPACK&lt;/i&gt; will run the simulation and give notice when it's finished, or errors if something is wrong.</help>
+		</parameter>
+	</frame>
+	<frame caption="Step 5: Visualize the results">
+		<section name="Example Workflow"/>
+		<parameter type="helptext" wrap="true">
+			<help>The main visualization tool is &lt;i&gt;niViz&lt;/i&gt;, which is an application that runs in the browser. Consequently, clicking on &quot;Open niViz&quot; opens a new browser window. If you already have a browser window running, it may open in a new tab there. (You can obtain a &lt;a href=&quot;https://models.slf.ch/p/niviz/downloads/&quot;&gt;copy to run locally here&lt;/a&gt;.)</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>You may have noticed the file system view that is displayed below change its contents. This is because the button you pressed executes a second command to navigate it to the simulation software's output folder. From there you can take the output files and drag them into &lt;i&gt;niViz&lt;/i&gt;. For example, if you drag the &lt;code&gt;.pro&lt;/code&gt; file from the file listing into &lt;i&gt;niViz&lt;/i&gt; in the browser, then you should see the end result of the simulation, the evolution of the snowpack over a winter season.</help>
+		</parameter>
+	</frame>
+
+	<!-- CONFIGURING SIMULATIONS -->
+
+	<parameter type="label" label="&lt;h3&gt;Walkthrough of the example simulation&lt;/h3&gt;" color="sl_orange">
+		<section name="Configuring simulations" color="sl_orange"/>
+	</parameter>
+	<parameter type="helptext" wrap="true">
+		<section name="Configuring simulations"/>
+		<help>&lt;font color=&quot;#268bd2&quot;&gt;Simulations&lt;/font&gt; are applications that have an INI file loaded and therefore pose a complete model setup.&lt;br&gt;</help>
+	</parameter>
+	<frame caption="Configuring your own simulation workflows" color="info" background_color="sl_base2">
+		<section name="Configuring simulations"/>
+		<parameter type="helptext" wrap="true">
+			<help>Note: This is an advanced topic. You will already be using &lt;i&gt;INIshell&lt;/i&gt;'s features for developers. Hence, once you feel comfortable with the following example you should move on to the workflow portion of the developer's help to learn more.</help>
+		</parameter>
+	</frame>
+	<frame caption="Understanding the Weißfluhjoch example">
+		<section name="Configuring simulations"/>
+		<parameter type="helptext" wrap="true">
+			<help>As we have mentioned, a simulation is an application with a loaded INI file. Applications are described in XML files which are listed in the &lt;font color=&quot;#268bd2&quot;&gt;Applications&lt;/font&gt; workflow tab. Similarly, simulations are described by XML files listed in the &lt;font color=&quot;#268bd2&quot;&gt;Simulations&lt;/font&gt; tab.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>If you have a look at the &quot;Weißfluhjoch&quot; configuration file by right-clicking on it in the list and opening it in your editor you will see the following contents:&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;inishell_config simulation=&quot;Weissfluhjoch&quot; icon=&quot;weissfluhjoch.png&quot;&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;include file=&quot;../inishell-apps/snowpack.xml&quot;/&amp;gt;&lt;br&gt;
+			&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;include file=&quot;workflow_wfj.xml&quot;/&amp;gt;&lt;br&gt;
+			&amp;lt;/inishell_config&amp;gt;&lt;br&gt;&lt;/code&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>The first and the last line identify that this is indeed an &lt;i&gt;INIshell&lt;/i&gt; configuration file. The second line tells &lt;i&gt;INIshell&lt;/i&gt; to include the &lt;i&gt;SNOWPACK&lt;/i&gt; configuration file, i. e. it is a &lt;i&gt;SNOWPACK&lt;/i&gt; simulation. The third line includes another configuration file containing additional workflow tabs.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>If you double-click on the Weißfluhjoch simulation you can see what each of those lines do: the &lt;i&gt;SNOWPACK&lt;/i&gt; include &lt;b&gt;loads all INI keys&lt;/b&gt; of &lt;i&gt;SNOWPACK&lt;/i&gt; into the main panel. The &lt;i&gt;SNOWPACK&lt;/i&gt; configuration file also includes directives for an additonal workflow tab to run the software called &lt;font color=&quot;#268bd2&quot;&gt;SNOWPACK&lt;/font&gt;. You can see that this is an &lt;b&gt;application-specific workflow tab&lt;/b&gt; because it is colored differently. Building on to this a custom workflow configuration file is included which loads the &lt;b&gt;simulation-specific&lt;/b&gt; &lt;font color=&quot;#268bd2&quot;&gt;Weißfluhjoch&lt;/font&gt; workflow panel.</help>
+		</parameter>
+	</frame>
+	<frame caption="Adding your simulations">
+		<section name="Configuring simulations"/>
+		<parameter type="helptext" wrap="true">
+			<help>For each of your simulations you need a file like this in a location that &lt;i&gt;INIshell&lt;/i&gt; can find (for example a &lt;i&gt;simulations&lt;/i&gt; folder in the same directory &lt;i&gt;INIshell&lt;/i&gt; is in). Open the Weißfluhjoch XML in your editor and modify the contents to look like this:&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;code&gt;&amp;lt;inishell_config simulation=&quot;MySnowpackExperiment&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;include file=&quot;../inishell-apps/snowpack.xml&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;workflow&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;section caption=&quot;My SNOWPACK run&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;element id=&quot;my_ini&quot; type=&quot;text&quot; default=&quot;${inifile}&quot;/&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;element caption=&quot;Start my experiment&quot; type=&quot;button&quot;&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;command&amp;gt;snowpack -c %my_ini -e 1996-01-31T23:59&amp;lt;/command&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/element&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/section&amp;gt;&lt;br&gt;
+				&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/workflow&amp;gt;&lt;br&gt;
+				&amp;lt;/inishell_config&amp;gt;&lt;/code&gt;&lt;br&gt;</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>We have made the following changes: &lt;b&gt;a)&lt;/b&gt; Renamed it to MySnowpackExperiment (this is the name that will show up in the list). &lt;b&gt;b)&lt;/b&gt; Removed the other simulation's workflow include, and added our own (this time directly and not in another include file). &lt;b&gt;c)&lt;/b&gt; Defined a workflow panel tab called &quot;My SNOWPACK run&quot; by defining a new &lt;code&gt;section&lt;/code&gt;. &lt;b&gt;d)&lt;/b&gt; Added two elements to that section: a text field, and a button.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>The &lt;b&gt;text element&lt;/b&gt; this time does not point to a fixed INI file, but rather it uses a key to reference the INI file that is currently being manipulated in the &lt;font color=&quot;#268bd2&quot;&gt;Applications&lt;/font&gt; workflow tab. Go ahead and load an INI file into &lt;i&gt;SNOWPACK&lt;/i&gt;, make some changes, and save it. Wherever it is on the file system, this INI file can now be referenced with &lt;code&gt;${inifile}&lt;/code&gt;.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>The &lt;b&gt;button element&lt;/b&gt; holds a command XML node specifying the system command to run, in this case it starts &lt;i&gt;SNOWPACK&lt;/i&gt; with the current INI file, and a fixed end date. The command references the value of the INI file text box by its ID via &lt;code&gt;%my_ini&lt;/code&gt; (note how this is the ID specified in the text element prefaced with &lt;code&gt;%&lt;/code&gt;.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>Save the XML file in the same folder. Refresh the &lt;font color=&quot;#268bd2&quot;&gt;Simulations&lt;/font&gt; workflow tab by right-clicking it - your simulation should appear in the list. Use the autoload feature we have discussed earlier to automatically open an INI file when this simulation is opened. Now we can at any time start &lt;i&gt;INIshell&lt;/i&gt;, and with one double-click view the complete setup of the simulation. We can make some changes to the INI file, and run the experiment.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>See the developer's help for all the elements you can build, the commands you can run and the available substitutions.</help>
+		</parameter>
+	</frame>
+	<frame caption="Opening a fixed INI file for a specific simulation">
+		<section name="Configuring simulations"/>
+		<parameter type="helptext" wrap="true">
+			<help>In addition to the volatile (setting stays on local machine) mechanism to automatically open an INI file after loading an application or simulation that is the check box in the top right corner, you can also request to open INI files via an XML command. To do this, specify an &lt;code&gt;&amp;lt;autoload inifile="your_file.ini"&amp;gt; tag. Have a look at the example Weißfluhjoch simulation XML.&lt;/code&gt;</help>
+		</parameter>
+	</frame>
+	<frame caption="Congratulations">
+		<section name="Configuring simulations"/>
+		<parameter type="helptext" wrap="true">
+			<help>If this sounds complicated at first it is, but once you have worked through this small example and get the idea of it you have understood the basic principle of &lt;i&gt;INIshell&lt;/i&gt; and can start experimenting.</help>
+		</parameter>
+	</frame>
+
+	<!-- TROUBLESHOOTING -->
+
+	<parameter type="label" label="&lt;h3&gt;Troubleshooting&lt;/h3&gt;" color="error">
+		<section name="Troubleshooting" color="error"/>
+	</parameter>
+	<parameter type="helptext" wrap="true" section="Troubleshooting">
+		<help>If &lt;i&gt;INIshell&lt;/i&gt; crashes or otherwise behaves strangely, feel free to file a bug report through the menu. If setting up your own simulations runs into problems, please study this help file and the provided examples carefully. For developers there's more help available through the menu. Here are some additional hints.</help>
+	</parameter>
+	<frame caption="No applications available">
+		<section name="Troubleshooting"/>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;i&gt;INIshell&lt;/i&gt; shows applications in the &lt;font color=&quot;#268bd2&quot;&gt;Application&lt;/font&gt; list if configuration files for them are in a location on your computer that &lt;i&gt;INIshell&lt;/i&gt; can find. Your distribution of &lt;i&gt;INIshell&lt;/i&gt; should have shipped with application files in a folder called &lt;code&gt;inishell-apps&lt;/code&gt;. You can use &lt;i&gt;INIshell&lt;/i&gt;'s command line tools to display which folders are being searched (and consequently where you can put them, &lt;code&gt;--print_search_dirs&lt;/code&gt;).</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>If you do not have any, you can either get a &lt;a href=&quot;https://models.slf.ch/p/inishell-ng/downloads/&quot;&gt;fresh install&lt;/a&gt; of &lt;i&gt;INIshell&lt;/i&gt; or you can &lt;a href=&quot;https://models.slf.ch/p/inishell-ng/source/tree/master/applications/&quot;&gt;download the files directly&lt;/a&gt;. Simply take all XML files like &lt;code&gt;meteoio.xml&lt;/code&gt; and put them in the same folder as &lt;i&gt;INIshell&lt;/i&gt;. An application is usually described by more than one file. Right-click the list to refresh and the application &lt;i&gt;MeteoIO&lt;/i&gt; should show up. Make sure the user running &lt;i&gt;INIshell&lt;/i&gt; has the right to read the files.</help>
+		</parameter>
+	</frame>
+	<frame caption="No simulations available">
+		<section name="Troubleshooting"/>
+		<parameter type="helptext" wrap="true">
+			<help>Simulations work the same way as applications. Try downloading the files from &lt;a href=&quot;https://models.slf.ch/p/inishell-ng/source/tree/master/simulations/example_simulation&quot;&gt;INIshell's project page&lt;/a&gt; and put them in the folder &lt;i&gt;INIshell&lt;/i&gt; resides in, or in a subfolder called &lt;code&gt;simulations&lt;/code&gt;. If this works, study the help file and try to expand this example for your own simulations. If not, feel free to file a bug report through the menu.</help>
+		</parameter>
+	</frame>
+	<frame caption="Software location on the computer">
+		<section name="Troubleshooting"/>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;i&gt;INIshell&lt;/i&gt; can interact with model software running on the computer. It will try to run the program and feed it with correct paths to the files you are configuring within &lt;i&gt;INIshell&lt;/i&gt;. If a program can't be found then you may need to adapt your system's &lt;code&gt;PATH&lt;/code&gt; variable. Please refer to &lt;a href=&quot;https://models.slf.ch/p/snowpack/page/Getting-started/&quot;&gt;SNOWPACK's online help&lt;/a&gt; for more.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+			<help>If you need to change your system's &lt;code&gt;PATH&lt;/code&gt;, restart &lt;i&gt;INIshell&lt;/i&gt; for the changes to take effect.</help>
+		</parameter>
+		<parameter type="helptext" wrap="true">
+				<help>If an INI file can't be found it may help to provide the absoute file path.</help>
+		</parameter>
+	</frame>
+	<frame caption="INIshell settings file">
+		<section name="Troubleshooting"/>
+		<parameter type="helptext" wrap="true">
+			<help>&lt;i&gt;INIshell&lt;/i&gt; stores a couple of settings in a settings file called &lt;code&gt;inishell_config.xml&lt;/code&gt;. Depending on your setup, it can be found in a number of different locations. For example, on GNU/Linux it may be located in &lt;code&gt;/home/myuser/.config/SLF/INIshell&lt;/code&gt;. The exact location can be found in the settings window or through the command line (&lt;code&gt;./inishell --print_settings_location&lt;/code&gt;). If something gets stuck you can try to delete this file, it will be recreated the next time you close &lt;i&gt;INIshell&lt;/i&gt;.</help>
+		</parameter>
+	</frame>
+	<frame caption="Program styling">
+		<section name="Troubleshooting"/>
+		<parameter type="helptext" wrap="true">
+			<help>The exact way &lt;i&gt;INIshell&lt;/i&gt; looks like may be chosen by your operating system. If you are experiencing glitches such as striked through captions, button size differences, or misaligned elements this is likely the culprit. Have a look at this &lt;a href=&quot;https://models.slf.ch/p/inishell-ng/page/Screenshots/&quot;&gt;help page with screenshots&lt;/a&gt; to see what &lt;i&gt;INIshell&lt;/i&gt; is supposed to look like.</help>
+		</parameter>
+		<frame caption="Expert setting" color="info" background_color="sl_base2">
+		<parameter type="helptext" wrap="true">
+			<help>If you are not happy you can try starting &lt;i&gt;INIshell&lt;/i&gt; with a different style by either setting it in your operating system's tools for this, or by starting it via for example&lt;br&gt;&lt;code&gt;./inishell --set_style Windows&lt;/code&gt;&lt;br&gt; You can use the command line to print a list of available styles (&lt;code&gt;./inishell --print_styles&lt;/code&gt;). On GNU/Linux you can try setting a style in the &lt;i&gt;Gnome Tweaks&lt;/i&gt; if available, or you can install the Qt5 styles:&lt;br&gt;&lt;code&gt;sudo apt install qt5ct&lt;br&gt;export QT_QPA_PLATFORMTHEME="qt5ct"&lt;/code&gt; (put this in your &lt;i&gt;.profile&lt;/i&gt;)&lt;br&gt;&lt;code&gt;qt5ct&lt;/code&gt; (then log out and back in)</help>
+		</parameter>
+		</frame>
+	</frame>
+
+</inishell_config>

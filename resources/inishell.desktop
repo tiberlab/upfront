@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=inishell
+Name=INIshell
+GenericName=Dynamic graphical interface to generate INI files
+Icon=icons/inishell_192.png
+Terminal=false
+Categories=Utilities;Development

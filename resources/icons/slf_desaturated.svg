@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Creator: fig2dev Version 3.2 Patchlevel 5-alpha5 -->
+
+<!-- CreationDate: Thu Feb 28 17:10:09 2008 -->
+
+<!-- Magnification: 1.000 -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="343.27994"
+   height="398.72269"
+   viewBox="2907 1826 4533.6884 5272"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="slf_desaturated.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/bavay/Documents/slf_desaturated.png"
+   inkscape:export-xdpi="250"
+   inkscape:export-ydpi="250"
+   version="1.1"
+   inkscape:label="spikes">
+  <metadata
+     id="metadata61">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs59" />
+  <sodipodi:namedview
+     inkscape:window-height="2003"
+     inkscape:window-width="3840"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="4.4156143"
+     inkscape:cx="102.20009"
+     inkscape:cy="199.18974"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:current-layer="g1180"
+     showgrid="false"
+     inkscape:window-maximized="1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="spikes"
+     style="display:inline">
+    <g
+       id="g1248">
+      <path
+         d="m 3008.7537,3849.4723 922,-247 m -974,-562 1438,829 m -711,-1189 247,922"
+         style="stroke:#acacac;stroke-width:195;stroke-linecap:butt;stroke-linejoin:miter;opacity:1"
+         id="polyline40"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m 7235.7537,4712.4723 -922,247 m 974,562 -1438,-829 m 711,1189 -247,-922"
+         style="stroke:#acacac;stroke-width:195;stroke-linecap:butt;stroke-linejoin:miter;opacity:1"
+         id="polyline22"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m 5799.7537,6369.4723 -675,-675 m 0,1125 v -1425 m -675,975 675,-675"
+         style="stroke:#acacac;stroke-width:195;stroke-linecap:butt;stroke-linejoin:miter;opacity:1"
+         id="polyline28"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m 3701.7537,5881.4723 247,-922 m -974,562 1438,-829 m -1386,20 922,247"
+         style="stroke:#acacac;stroke-width:195;stroke-linecap:butt;stroke-linejoin:miter;opacity:1"
+         id="polyline34"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m 7269.7537,3040.4723 -1438,829 m 1386,-20 -922,-247 m 247,-922 -247,922"
+         style="stroke:#acacac;stroke-width:195;stroke-linecap:butt;stroke-linejoin:miter;opacity:1"
+         id="polyline16"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m 5794.7537,2192.4723 -675,675 m -675,-675 675,675 m 0,-1125 v 1425"
+         style="stroke:#acacac;stroke-width:195;stroke-linecap:butt;stroke-linejoin:miter;opacity:1"
+         id="polyline10"
+         inkscape:connector-curvature="0" />
+      <text
+         transform="scale(0.85984552,1.1629996)"
+         xml:space="preserve"
+         x="6617.9072"
+         y="5853.2817"
+         font-style="normal"
+         font-weight="bold"
+         font-size="444"
+         id="text44"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:860.80981445px;line-height:0%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans Bold';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#6a6a6a;stroke:#6a6a6a;stroke-width:0.05145736in;opacity:1;"> SLF</text>
+    </g>
+  </g>
+  <g
+     inkscape:label="center"
+     id="g1180"
+     inkscape:groupmode="layer"
+     style="display:inline">
+    <g
+       id="g1254">
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#6a6a6a;stroke-width:165.00010681;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;opacity:1"
+         d="m 3936.7537,3875.4723 h 765 v -718 h 523"
+         id="path1170" />
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#6a6a6a;stroke-width:165;stroke-linecap:butt;stroke-linejoin:miter;opacity:1"
+         d="m 5513.7537,3086.4723 v 800 h 706 v 421"
+         id="path1172" />
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:none;stroke:#6a6a6a;stroke-width:165;stroke-linecap:butt;stroke-linejoin:miter;opacity:1"
+         d="m 4730.7537,5475.4723 v -800 h -706 v -421"
+         id="path1174" />
+      <polyline
+         id="polyline1176"
+         style="fill:none;stroke:#6a6a6a;stroke-width:165;stroke-linecap:butt;stroke-linejoin:miter;opacity:1"
+         points="7850,4909 7085,4909 7085,5627 6565,5628 "
+         transform="translate(-1542.2463,-222.52769)" />
+    </g>
+  </g>
+</svg>
